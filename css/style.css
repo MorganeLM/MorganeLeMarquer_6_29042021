@@ -1,7 +1,15 @@
 body {
   position: relative;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+}
+
+p, h1, h2 {
+  margin: 0;
 }
 
 ul {
@@ -9,6 +17,8 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding-left: 0;
+  margin: 0;
 }
 
 ul li {
@@ -16,6 +26,7 @@ ul li {
 }
 
 .skipContent {
+  display: none;
   position: fixed;
   top: 10px;
   left: 50%;
@@ -25,17 +36,17 @@ ul li {
   background-color: #D3573C;
   border-radius: 5px;
   font-size: 1.1em;
-  font-weight: bold;
+  font-weight: 500;
   padding: 5px 10px;
 }
 
 .tag {
   color: #901C1C;
-  border: 1px solid #525252;
+  border: 1px solid #c4c4c4;
   border-radius: 20px;
   padding: 3px 7px;
   font-size: 0.8em;
-  font-weight: bold;
+  font-weight: 500;
   text-transform: capitalize;
 }
 
@@ -49,7 +60,7 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 20px 80px;
+  padding: 35px 100px;
 }
 
 header img {
@@ -63,7 +74,7 @@ header nav li {
 header h1 {
   color: #901C1C;
   font-size: 2.2em;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 main {
@@ -73,26 +84,60 @@ main {
       grid-template-columns: repeat(3, 1fr);
 }
 
-main article {
-  padding: 40px;
+main .photograph {
+  padding: 40px 20px;
   text-align: center;
 }
 
-main article .photographImage {
+main .photograph__image {
   margin: 10%;
   border-radius: 50%;
   width: 200px;
   height: 200px;
   margin: auto;
   overflow: hidden;
+  -webkit-box-shadow: lightgray 5px 5px 7px;
+          box-shadow: lightgray 5px 5px 7px;
 }
 
-main article .photographImage img {
+main .photograph__image img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
+}
+
+main .photograph__name {
+  color: #D3573C;
+  font-size: 2.5em;
+  font-weight: 400;
+  margin-bottom: 10px;
+  margin-top: 25px;
+}
+
+main .photograph p {
+  margin-bottom: 5px;
+}
+
+main .photograph__location {
+  color: #901C1C;
+}
+
+main .photograph__description {
+  font-size: 0.8em;
+}
+
+main .photograph__price {
+  color: #525252;
+  font-size: 0.8em;
+}
+
+main .photograph__tags {
+  margin-top: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 /*# sourceMappingURL=style.css.map */
