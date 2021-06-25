@@ -15,7 +15,7 @@ a{
     text-decoration: none;
 }
 
-p, h1, h2{
+p, h1, h2, h3{
     margin: 0;
 }
 
@@ -156,17 +156,51 @@ main.photographer_page{
     }
     .photoSection{
         &__filter{
+            margin-top: 20px;
             select{
                 color: white;
                 background-color: $primary;
+                border: none;
+                border-radius: 5px;
+                padding: 12px 8px;
+                option{
+                    border: none;
+                }
             }
         }
         &__list{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-top: 30px;
             &__photoBloc{
-                img{
-                    width: 100%;
+                figure{
+                    margin: 0;
+                    figcaption{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: baseline;
+                        margin-top: 10px;
+                        h3{
+                            color: $primary;
+                            font-weight: 400;
+                        }
+                        i{
+                            font-size: 1.2em;
+                            color: $primary;
+                        }
+                    }
+                }
+                &__photo{
+                    position: relative;
+                    width:100%;
+                    aspect-ratio: 1 / 1;
+                    overflow: hidden;
+                    img{
+                        width: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
                 }
             }
         }

@@ -8,7 +8,7 @@ a {
   text-decoration: none;
 }
 
-p, h1, h2 {
+p, h1, h2, h3 {
   margin: 0;
 }
 
@@ -188,9 +188,20 @@ main.photographer_page .photographer_info button {
   margin-top: 30px;
 }
 
+main.photographer_page .photoSection__filter {
+  margin-top: 20px;
+}
+
 main.photographer_page .photoSection__filter select {
   color: white;
   background-color: #901C1C;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 8px;
+}
+
+main.photographer_page .photoSection__filter select option {
+  border: none;
 }
 
 main.photographer_page .photoSection__list {
@@ -198,9 +209,49 @@ main.photographer_page .photoSection__list {
   display: grid;
   -ms-grid-columns: (1fr)[3];
       grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  margin-top: 30px;
 }
 
-main.photographer_page .photoSection__list__photoBloc img {
+main.photographer_page .photoSection__list__photoBloc figure {
+  margin: 0;
+}
+
+main.photographer_page .photoSection__list__photoBloc figure figcaption {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  margin-top: 10px;
+}
+
+main.photographer_page .photoSection__list__photoBloc figure figcaption h3 {
+  color: #901C1C;
+  font-weight: 400;
+}
+
+main.photographer_page .photoSection__list__photoBloc figure figcaption i {
+  font-size: 1.2em;
+  color: #901C1C;
+}
+
+main.photographer_page .photoSection__list__photoBloc__photo {
+  position: relative;
   width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+main.photographer_page .photoSection__list__photoBloc__photo img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 /*# sourceMappingURL=style.css.map */
