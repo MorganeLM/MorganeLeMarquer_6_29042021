@@ -84,12 +84,12 @@ main {
       grid-template-columns: repeat(3, 1fr);
 }
 
-main .photograph {
+main .photographer {
   padding: 40px 20px;
   text-align: center;
 }
 
-main .photograph__image {
+main .photographer__image {
   margin: 10%;
   border-radius: 50%;
   width: 200px;
@@ -100,7 +100,7 @@ main .photograph__image {
           box-shadow: lightgray 5px 5px 7px;
 }
 
-main .photograph__image img {
+main .photographer__image img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -109,7 +109,7 @@ main .photograph__image img {
      object-position: center;
 }
 
-main .photograph__name {
+main .photographer__name {
   color: #D3573C;
   font-size: 2.5em;
   font-weight: 400;
@@ -117,27 +117,90 @@ main .photograph__name {
   margin-top: 25px;
 }
 
-main .photograph p {
+main .photographer p {
   margin-bottom: 5px;
 }
 
-main .photograph__location {
+main .photographer__location {
   color: #901C1C;
 }
 
-main .photograph__description {
+main .photographer__description {
   font-size: 0.8em;
 }
 
-main .photograph__price {
+main .photographer__price {
   color: #525252;
   font-size: 0.8em;
 }
 
-main .photograph__tags {
+main .photographer__tags {
   margin-top: 10px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+main.photographer_page {
+  display: block;
+  margin: 10px 100px;
+}
+
+main.photographer_page .photographer_info {
+  background-color: #FAFAFA;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 40px 50px;
+}
+
+main.photographer_page .photographer_info__bloc {
+  width: 33%;
+}
+
+main.photographer_page .photographer_info .photographer__name {
+  margin-top: 10px;
+}
+
+main.photographer_page .photographer_info .photographer__image {
+  margin: 0;
+}
+
+main.photographer_page .photographer_info .photographer__tags {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+main.photographer_page .photographer_info p {
+  margin-bottom: 15px;
+}
+
+main.photographer_page .photographer_info button {
+  padding: 15px 8px;
+  color: white;
+  background-color: #901C1C;
+  border: none;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+main.photographer_page .photoSection__filter select {
+  color: white;
+  background-color: #901C1C;
+}
+
+main.photographer_page .photoSection__list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+}
+
+main.photographer_page .photoSection__list__photoBloc img {
+  width: 100%;
 }
 /*# sourceMappingURL=style.css.map */
