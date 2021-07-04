@@ -1,17 +1,21 @@
 let jsonData;
 let photographers;
 let homeMain = document.querySelector('#homepageMain');
+let tagFilter;
 
-// Replace ./data.json with your JSON feed
 fetch('/js/data.json')
-  .then((response) => {
-    return response.json()
-  })
+  .then((response) => response.json())
   .then((data) => {
     // Work with JSON data here
     jsonData = data;
     photographers = data.photographers;
-    console.log(jsonData);
+    if(tagFilter){
+        photographers = photographers.filter((element) => {
+           if(element.tags.indexOf(tagFilter) !== -1){
+               return element;
+           };
+        });
+    }
     photographers.forEach((photographer, index) => {
         homeMain.insertAdjacentHTML('beforeend', `
         <article class="photographer">
@@ -28,11 +32,39 @@ fetch('/js/data.json')
                 </ul>
             </article>
         `);
+        // Je cherche l'élement groupe de tag et le rempli des tags
         let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
-        photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`))
+        photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`));
+        // J'ajoute un écouteur d'évenement sur chaque tag et récupère le filtre
+        let tags = document.querySelectorAll(`#tagGroup_${index} > li`);
+        tags.forEach((tag) => tag.addEventListener('click', function(){
+            tagFilter = this.textContent;
+        }))
     });
   })
   .catch((error) => {
-    // Do something for an error here
     console.log(error);
   })
+
+function loadPhotographers(data){
+    photographers = data.photographers;
+    if(tagFilter){
+        photographers = photographers.filter((element) => {
+           if(element.tags.indexOf(tagFilter) !== -1){
+               return element;
+           };
+        });
+    }
+}
+
+function tagEvent(){
+
+}
+//   const getData = async(url) =>{
+//       await fetch(url).then((response) => {
+//         return response.json()
+//       })
+//   }
+
+//   let data = getData('/js/data.json');
+//   console.log(data)
