@@ -51,6 +51,16 @@ ul li {
   cursor: pointer;
 }
 
+.tag:hover {
+  background-color: #D3573C;
+  color: white;
+}
+
+.activeTag {
+  background-color: #901C1C;
+  color: white;
+}
+
 .tag::before {
   content: '#';
 }

@@ -55,6 +55,16 @@ ul{
     cursor: pointer;
 }
 
+.tag:hover{
+    background-color: $secondary;
+    color: white;
+}
+
+.activeTag{
+    background-color: $primary;
+    color: white;
+}
+
 .tag::before{
     content: '#'
 }
