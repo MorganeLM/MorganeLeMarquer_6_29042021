@@ -204,6 +204,7 @@ main.photographer_page .photographer_info button {
   border: none;
   border-radius: 5px;
   margin-top: 30px;
+  cursor: pointer;
 }
 
 main.photographer_page .photoSection__filter {

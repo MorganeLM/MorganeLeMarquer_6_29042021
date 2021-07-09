@@ -128,12 +128,14 @@ getData()
 const photographerPage = document.querySelector('.photographer_page');
 let selectedPhotographer;
 
-async function showPhotographer() {
+async function showData() {
 
     // read our JSON
     let response = await fetch('/js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
+    let medias = data.media;
+    let photographerMedias = [];
 
     // search photographer
     const currentPhotographerId = new URL(window.location.href).searchParams.get('id');
@@ -147,7 +149,17 @@ async function showPhotographer() {
         }
     });
     console.log(selectedPhotographer);
+    let selectedPhotographerName = selectedPhotographer.name.split(' ')[0];
 
+    // search medias of the photographer
+    medias.forEach(media => {
+        if(media.photographerId === photographerId){
+            photographerMedias.push(media);
+        }
+    })
+    console.log(photographerMedias);
+
+    // Ajout du template - section description du photographe
     photographerPage.insertAdjacentHTML('beforeend',
         `<section class="photographer_info">
         <div class="photographer_info__bloc">
@@ -167,11 +179,46 @@ async function showPhotographer() {
             <img src="images/photos/Photographers_ID_Photos/${selectedPhotographer.portrait}" alt="photo de ${selectedPhotographer.name}">
         </div>
     </section>`
-    )
+    );
+
+    // Ajout du template - section media - filtre
+    photographerPage.insertAdjacentHTML('beforeend',
+    `<section class="photoSection">
+        <div class="photoSection__filter">
+            Trier par 
+            <select>
+                <option>Popularité <i class="las la-angle-down"></i></option>
+                <option>Date</option>
+                <option>Titre</option>
+            </select>
+        </div>
+        <div class="photoSection__list">
+        </div>
+    </section>`)
+
+    // Ajout du template - section media - media
+    let photographerPageMediaList = document.querySelector('.photoSection__list');
+    photographerMedias.forEach(media => {
+        photographerPageMediaList.insertAdjacentHTML('beforeend',
+    `<article class="photoSection__list__photoBloc">
+        <figure>
+            <div  class="photoSection__list__photoBloc__photo">
+                <img src="images/photos/${selectedPhotographerName}/${media.image}" alt="${media.title}">
+            </div>
+            <figcaption>
+                <h3>${media.title}</h3>
+                <div>
+                    <span>${media.likes}</span>
+                    <i class="las la-heart"></i>
+                </div>
+            </figcaption>
+        </figure>
+    </article>`)
+    })
 }
 
 if(photographerPage){
-    showPhotographer().then(() => {
+    showData().then(() => {
         let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
         selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`));
     })
