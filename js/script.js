@@ -4,6 +4,19 @@ let tagNav = document.querySelector('#tagNav');
 let homeMain = document.querySelector('#homepageMain');
 let tagFilter;
 let tagList = [];
+//let tagObjects = [];
+
+// class menuTag {
+//     constructor(name, state){
+//       this.name = name;
+//       this.state = state;
+//     }
+  
+//     // function setTagEvent() ?
+//     // get area() {
+//     //   return this.calcArea();
+//     // }
+// }
 
 async function getData() {
     let response = await fetch('/js/data.json');
@@ -28,15 +41,15 @@ function getTagList(){
                 if(tagList.indexOf(tag) === -1){
                     tagList.push(tag);
                 }
-            })
-        })
+            });
+        });
     });
 }
 
 function addTags(){
     return getTagList().then(function(){
         tagList.forEach((tag) => {
-            tagNav.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`);
+            tagNav.insertAdjacentHTML('beforeend', `<li class="tag navTag">${tag}</li>`);
         });
         addTagEvents('#tagNav > li');
     });
@@ -65,7 +78,8 @@ function createTemplate(photographers){
         let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
         photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`));
         // J'ajoute un écouteur d'évenement sur chaque tag et récupère le filtre
-        addTagEvents(`#tagGroup_${index} > li`);
+        // Cahier des charges : event sur tag du menu
+        //addTagEvents(`#tagGroup_${index} > li`);
     });
 }
 
@@ -73,16 +87,30 @@ function addTagEvents(tagElt){
     let tags = document.querySelectorAll(tagElt);
     tags.forEach((tag) => tag.addEventListener('click', function(e){
         e.preventDefault();
-        if(tagFilter === this.innerHTML){
-            tagFilter = "";
-        }else{
-            tagFilter = this.innerHTML;
-            this.classList.add('activeTag');
-        }
+        tagFilter = this.innerHTML;
+        this.classList.add('activeTag');
+        tags.forEach((tag) => {
+            if(tagFilter !== tag.innerHTML){
+                tag.classList.remove('activeTag');
+            }
+        });
         console.log(tagFilter);
         getData().then((photographers) => createTemplate(photographers));
     }));
 }
 
-photographers = getData().then((photographers) => createTemplate(photographers));
-addTags();
+// function addTagClass(){
+//     let allTags = document.querySelectorAll('.tag');
+//     return allTags.forEach((tag) => tag.addEventListener('click', function(){
+//         if(tag.innerHTML === tagFilter){
+//             this.classList.add('activeTag');
+//         }else{
+//             this.classList.remove('activeTag');
+//         }
+//     }))
+// }
+
+getData()
+    .then((photographers) => createTemplate(photographers))
+    .then(() => addTags())
+    // .then(() => addTagClass())
