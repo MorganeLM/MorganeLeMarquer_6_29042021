@@ -61,7 +61,7 @@ function createTemplate(photographers){
     photographers.forEach((photographer, index) => {
         homeMain.insertAdjacentHTML('beforeend', `
         <article class="photographer">
-                <a href="photographer_page.html">
+                <a href="photographer_page.html?id=${photographer.id}">
                     <div class="photographer__image">
                         <img src="images/photos/Photographers_ID_Photos/${photographer.portrait}" alt="photo de ${photographer.name}">
                     </div>
@@ -114,3 +114,12 @@ getData()
     .then((photographers) => createTemplate(photographers))
     .then(() => addTags())
     // .then(() => addTagClass())
+
+
+
+// ------------------------------------------------------------
+// ----------------------PHOTOGRAPHER PAGE---------------------
+// ------------------------------------------------------------
+// separate JS
+
+
