@@ -267,10 +267,11 @@ main.photographer_page .photoSection__list__photoBloc__photo {
 }
 
 main.photographer_page .photoSection__list__photoBloc__photo img {
+  height: 100%;
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  -o-object-position: top;
+     object-position: top;
 }
 /*# sourceMappingURL=style.css.map */

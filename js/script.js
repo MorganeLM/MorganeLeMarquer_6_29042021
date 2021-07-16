@@ -1,3 +1,6 @@
+/*jslint es6 */
+'use strict';
+
 let jsonData;
 let photographers;
 let tagNav = document.querySelector('#tagNav');
@@ -5,20 +8,17 @@ let homeMain = document.querySelector('#homepageMain');
 let tagFilter;
 let tagList = [];
 //let tagObjects = [];
-
 // class menuTag {
 //     constructor(name, state){
 //       this.name = name;
 //       this.state = state;
 //     }
-  
 //     // function setTagEvent() ?
 //     // get area() {
 //     //   return this.calcArea();
 //     // }
 // }
-
-async function getData() {
+const getData = async () => {
     let response = await fetch('/js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
@@ -124,9 +124,48 @@ getData()
 // ------------------------------------------------------------
 // ----------------------PHOTOGRAPHER PAGE---------------------
 // ------------------------------------------------------------
-// separate JS
+// separate JS ?
 const photographerPage = document.querySelector('.photographer_page');
 let selectedPhotographer;
+// factory for media
+function Image(media){
+    this.id = media.id
+    this.photographerId = media.photographerId
+    this.title = media.title
+    this.image = media.image
+    this.tags = media.tags
+    this.likes = media.likes
+    this.date = media.date
+    this.price = media.price
+    this.description = `Photo nommée ${media.title} prise le ${media.date}`
+}
+
+function Video(media){
+    this.id = media.id
+    this.photographerId = media.photographerId
+    this.title = media.title
+    this.video = media.video
+    this.tags = media.tags
+    this.likes = media.likes
+    this.date = media.date
+    this.price = media.price
+    this.description = `Vidéo nommée ${media.title} tournée le ${media.date}`
+}
+
+function MediaFactory(media, type){
+    // this.create = function(media, type){
+        switch(type){
+            case 'image':
+                return new Image(media);
+            case 'video':
+                return new Video(media);
+        }
+    // }
+}
+
+function addLike(){
+    this.like ++;
+}
 
 async function showData() {
 
@@ -158,6 +197,16 @@ async function showData() {
         }
     })
     console.log(photographerMedias);
+    let videosAndImages = [];
+    photographerMedias.forEach(media => {
+        if(media.image){
+            videosAndImages.push(MediaFactory(media, 'image'));
+        }
+        if(media.video){
+            videosAndImages.push(MediaFactory(media, 'video'));
+        }
+    })
+    console.log(videosAndImages);
 
     // Ajout du template - section description du photographe
     photographerPage.insertAdjacentHTML('beforeend',
@@ -198,22 +247,44 @@ async function showData() {
 
     // Ajout du template - section media - media
     let photographerPageMediaList = document.querySelector('.photoSection__list');
-    photographerMedias.forEach(media => {
-        photographerPageMediaList.insertAdjacentHTML('beforeend',
-    `<article class="photoSection__list__photoBloc">
-        <figure>
-            <div  class="photoSection__list__photoBloc__photo">
-                <img src="images/photos/${selectedPhotographerName}/${media.image}" alt="${media.title}">
-            </div>
-            <figcaption>
-                <h3>${media.title}</h3>
-                <div>
-                    <span>${media.likes}</span>
-                    <i class="las la-heart"></i>
-                </div>
-            </figcaption>
-        </figure>
-    </article>`)
+    videosAndImages.forEach(media => {
+        if(media.image){
+            photographerPageMediaList.insertAdjacentHTML('beforeend',
+            `<article class="photoSection__list__photoBloc">
+                <figure>
+                    <div class="photoSection__list__photoBloc__photo">
+                        <img src="images/photos/${selectedPhotographerName}/${media.image}" alt="${media.description}">
+                    </div>
+                    <figcaption>
+                        <h3>${media.title}</h3>
+                        <div>
+                            <span>${media.likes}</span>
+                            <i class="las la-heart"></i>
+                        </div>
+                    </figcaption>
+                </figure>
+            </article>`);
+        }
+        if(media.video){
+            photographerPageMediaList.insertAdjacentHTML('beforeend',
+            `<article class="photoSection__list__photoBloc">
+                <figure>
+                    <div class="photoSection__list__photoBloc__photo">
+                        <video width='100%' height='100%' controls>
+                            <source src="images/photos/${selectedPhotographerName}/${media.video}" type="video/mp4" alt="${media.description}">
+                            Erreur de chargement de la video.
+                        </video>
+                    </div>
+                    <figcaption>
+                        <h3>${media.title}</h3>
+                        <div>
+                            <span>${media.likes}</span>
+                            <i class="las la-heart"></i>
+                        </div>
+                    </figcaption>
+                </figure>
+            </article>`)
+        }
     })
 }
 
