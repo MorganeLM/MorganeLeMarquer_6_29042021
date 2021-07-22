@@ -52,13 +52,10 @@ ul{
     font-size: 0.8em;
     font-weight: 500;
     text-transform: capitalize;
-}
-
-.navTag{
     cursor: pointer;
 }
 
-.navTag:hover{
+.tag:hover{
     background-color: $secondary;
     color: white;
 }
@@ -211,11 +208,13 @@ main.photographer_page{
                     }
                 }
                 &__photo{
+                    border-radius: 7px;
                     position: relative;
                     width:100%;
                     aspect-ratio: 1 / 1;
                     overflow: hidden;
-                    img{
+                    background-color: rgb(240, 240, 240);
+                    img, video{
                         height: 100%;
                         width: 100%;
                         object-fit: cover;

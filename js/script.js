@@ -52,7 +52,7 @@ function addTags(){
             tagList.forEach((tag) => {
                 tagNav.insertAdjacentHTML('beforeend', `<li class="tag navTag">${tag}</li>`);
             });
-            addTagEvents('#tagNav > li');
+            //addTagEvents('#tagNav > li');
         });
     }
 }
@@ -79,9 +79,8 @@ function createTemplate(photographers){
             `);
             // Je cherche l'élement groupe de tag et le rempli des tags
             let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
-            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`));
+            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag articleTag">${tag}</li>`));
             // J'ajoute un écouteur d'évenement sur chaque tag et récupère le filtre
-            // Cahier des charges : event sur tag du menu
             //addTagEvents(`#tagGroup_${index} > li`);
         });
     }
@@ -89,35 +88,46 @@ function createTemplate(photographers){
 
 function addTagEvents(tagElt){
     let tags = document.querySelectorAll(tagElt);
-    tags.forEach((tag) => tag.addEventListener('click', function(e){
-        e.preventDefault();
-        tagFilter = this.innerHTML;
-        this.classList.add('activeTag');
-        tags.forEach((tag) => {
-            if(tagFilter !== tag.innerHTML){
-                tag.classList.remove('activeTag');
-            }
-        });
-        console.log(tagFilter);
-        getData().then((photographers) => createTemplate(photographers));
+    tags.forEach((tag) => tag.addEventListener('click', function(){
+        // gestion du tag cliqué
+        if(tagFilter === this.innerHTML){
+            this.classList.remove('activeTag');
+            tagFilter = "";
+        }else{
+            this.classList.add('activeTag');
+            tagFilter = this.innerHTML;
+        }
+        // gestion des autres tags
+        if(tagElt !== 'li.tag'){
+            let allTags = document.querySelectorAll('li.tag');
+            allTags.forEach((tag) => {
+                if(tagFilter === tag.innerHTML){
+                    tag.classList.add('activeTag');
+                }else{
+                    tag.classList.remove('activeTag');
+                }
+            });
+        }else{
+            tags.forEach((tag) => {
+                if(tagFilter === tag.innerHTML){
+                    tag.classList.add('activeTag');
+                }else{
+                    tag.classList.remove('activeTag');
+                }
+            });
+        }
+        // génération du template avec filtre actualisé
+        getData()
+            .then((photographers) => createTemplate(photographers))
+            .then(() => addTagEvents('li.articleTag'))
     }));
 }
 
-// function addTagClass(){
-//     let allTags = document.querySelectorAll('.tag');
-//     return allTags.forEach((tag) => tag.addEventListener('click', function(){
-//         if(tag.innerHTML === tagFilter){
-//             this.classList.add('activeTag');
-//         }else{
-//             this.classList.remove('activeTag');
-//         }
-//     }))
-// }
 
 getData()
     .then((photographers) => createTemplate(photographers))
     .then(() => addTags())
-    // .then(() => addTagClass())
+    .then(() => addTagEvents('li.tag'))
 
 
 
@@ -252,9 +262,11 @@ async function showData() {
             photographerPageMediaList.insertAdjacentHTML('beforeend',
             `<article class="photoSection__list__photoBloc">
                 <figure>
-                    <div class="photoSection__list__photoBloc__photo">
+                    <a href="#" aria-label="${media.image}, aperçu en gros plan">
+                        <div class="photoSection__list__photoBloc__photo">
                         <img src="images/photos/${selectedPhotographerName}/${media.image}" alt="${media.description}">
-                    </div>
+                        </div>
+                    </a>
                     <figcaption>
                         <h3>${media.title}</h3>
                         <div>
@@ -268,13 +280,16 @@ async function showData() {
         if(media.video){
             photographerPageMediaList.insertAdjacentHTML('beforeend',
             `<article class="photoSection__list__photoBloc">
+                <a href="#"></a>
                 <figure>
-                    <div class="photoSection__list__photoBloc__photo">
-                        <video width='100%' height='100%' controls>
-                            <source src="images/photos/${selectedPhotographerName}/${media.video}" type="video/mp4" alt="${media.description}">
-                            Erreur de chargement de la video.
-                        </video>
-                    </div>
+                    <a href="#" aria-label="${media.video}, lire la vidéo en gros plan">
+                        <div class="photoSection__list__photoBloc__photo">
+                            <video height="100%"  width="100%">
+                                <source src="images/photos/${selectedPhotographerName}/${media.video}" type="video/mp4" alt="${media.description}">
+                                Erreur de chargement de la video.
+                            </video>
+                        </div>
+                    </a>
                     <figcaption>
                         <h3>${media.title}</h3>
                         <div>
