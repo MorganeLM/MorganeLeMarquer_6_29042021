@@ -5,55 +5,54 @@ let jsonData;
 let photographers;
 let tagNav = document.querySelector('#tagNav');
 let homeMain = document.querySelector('#homepageMain');
-let tagFilter;
+let tagFilter = null;
 let tagList = [];
-//let tagObjects = [];
-// class menuTag {
-//     constructor(name, state){
-//       this.name = name;
-//       this.state = state;
-//     }
-//     // function setTagEvent() ?
-//     // get area() {
-//     //   return this.calcArea();
-//     // }
-// }
+
 const getData = async () => {
     let response = await fetch('/js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
-    if(tagFilter){
-        console.log(photographers);
-        photographers = photographers.filter((element) => {
-            if(element.tags.indexOf(tagFilter) !== -1){
-                return element;
+    // liste des tags présents dans les données de photographes
+    photographers.forEach(function(photographer){
+        photographer.tags.forEach((tag) => {
+            if(tagList.indexOf(tag) === -1){
+                tagList.push(tag);
             }
         });
-        console.log(photographers);
+    });
+    // filtre des données si tag actif
+    if(tagFilter){
+        if(tagFilter !== "all"){
+            photographers = photographers.filter((element) => {
+                if(element.tags.indexOf(tagFilter) !== -1){
+                    return element;
+                }
+            });
+        }
+    }
+    else{
+        // filtre des données si tag venant de l'url
+        let tagFromPhotographerPage = new URL(window.location.href).searchParams.get('tag');
+        if(tagFromPhotographerPage){
+            tagFilter = tagFromPhotographerPage;
+            photographers = photographers.filter((element) => {
+                if(element.tags.indexOf(tagFromPhotographerPage) !== -1){
+                    return element;
+                }
+            });
+        }
     }
     return photographers;
 }
 
-function getTagList(){ 
-    return getData().then((photographers) => {
-        photographers.forEach(function(photographer){
-            photographer.tags.forEach((tag) => {
-                if(tagList.indexOf(tag) === -1){
-                    tagList.push(tag);
-                }
-            });
-        });
-    });
-}
-
 function addTags(){
     if(tagNav){
-        return getTagList().then(function(){
+        //return getTagList().then(function(){
             tagList.forEach((tag) => {
                 tagNav.insertAdjacentHTML('beforeend', `<li class="tag navTag">${tag}</li>`);
             });
             //addTagEvents('#tagNav > li');
-        });
+        //});
     }
 }
 
@@ -92,7 +91,7 @@ function addTagEvents(tagElt){
         // gestion du tag cliqué
         if(tagFilter === this.innerHTML){
             this.classList.remove('activeTag');
-            tagFilter = "";
+            tagFilter = "all";
         }else{
             this.classList.add('activeTag');
             tagFilter = this.innerHTML;
@@ -128,6 +127,14 @@ getData()
     .then((photographers) => createTemplate(photographers))
     .then(() => addTags())
     .then(() => addTagEvents('li.tag'))
+    .then(() => {
+        let tags = document.querySelectorAll('.navTag');
+            tags.forEach((tag) => {
+                if(tagFilter === tag.innerHTML){
+                    tag.classList.add('activeTag');
+                }
+            });
+    })
 
 
 
@@ -170,7 +177,7 @@ function MediaFactory(media, type){
             case 'video':
                 return new Video(media);
         }
-    // }
+    //}
 }
 
 function addLike(){
@@ -306,7 +313,7 @@ async function showData() {
 if(photographerPage){
     showData().then(() => {
         let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
-        selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<li class="tag">${tag}</li>`));
+        selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a href="index.html?tag=${tag}"><li class="tag">${tag}</li></a>`));
     })
 }
 
