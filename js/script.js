@@ -47,12 +47,9 @@ const getData = async () => {
 
 function addTags(){
     if(tagNav){
-        //return getTagList().then(function(){
-            tagList.forEach((tag) => {
-                tagNav.insertAdjacentHTML('beforeend', `<li class="tag navTag">${tag}</li>`);
-            });
-            //addTagEvents('#tagNav > li');
-        //});
+        tagList.forEach((tag) => {
+            tagNav.insertAdjacentHTML('beforeend', `<li class="tag navTag">${tag}</li>`);
+        });
     }
 }
 
@@ -79,8 +76,6 @@ function createTemplate(photographers){
             // Je cherche l'élement groupe de tag et le rempli des tags
             let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
             photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag articleTag">${tag}</li>`));
-            // J'ajoute un écouteur d'évenement sur chaque tag et récupère le filtre
-            //addTagEvents(`#tagGroup_${index} > li`);
         });
     }
 }
@@ -141,7 +136,7 @@ getData()
 // ------------------------------------------------------------
 // ----------------------PHOTOGRAPHER PAGE---------------------
 // ------------------------------------------------------------
-// separate JS ?
+// separate JS file ?
 const photographerPage = document.querySelector('.photographer_page');
 let selectedPhotographer;
 // factory for media
@@ -185,7 +180,6 @@ function addLike(){
 }
 
 async function showData() {
-
     // read our JSON
     let response = await fetch('/js/data.json');
     let data = await response.json();
@@ -196,18 +190,10 @@ async function showData() {
     // search photographer
     const currentPhotographerId = new URL(window.location.href).searchParams.get('id');
     let photographerId = parseInt(currentPhotographerId);
-    // let photographer = photographers.find((element) => element.id === photographerId);
-    // console.log(photographers[0].id);
-    photographers.forEach(element => {
-        if(element.id === photographerId){
-            selectedPhotographer = element;
-            return selectedPhotographer;
-        }
-    });
-    console.log(selectedPhotographer);
-    let selectedPhotographerName = selectedPhotographer.name.split(' ')[0];
+    selectedPhotographer = photographers.find((element) => element.id === photographerId);
+    let selectedPhotographerName = selectedPhotographer.name.split(' ')[0]; // for media path
 
-    // search medias of the photographer
+    // search medias of the selected photographer
     medias.forEach(media => {
         if(media.photographerId === photographerId){
             photographerMedias.push(media);
