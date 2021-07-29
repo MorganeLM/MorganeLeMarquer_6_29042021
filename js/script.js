@@ -200,7 +200,6 @@ async function showData() {
             photographerMedias.push(media);
         }
     })
-    console.log(photographerMedias);
     let videosAndImages = [];
     photographerMedias.forEach(media => {
         if(media.image){
@@ -211,38 +210,8 @@ async function showData() {
         }
     })
 
-    if(sortValue){
-        switch(sortValue){
-            case 'Popularity':
-                videosAndImages.sort((a, b) => {
-                    return a.likes - b.likes;
-                });
-                break;
-            case 'Date':
-                videosAndImages.sort((a, b) => {
-                    return new Date(b.date) - new Date(a.date);
-                });
-                break;
-            case 'Title':
-                videosAndImages.sort((a, b) => {
-                    let concatA = a.title.toLowerCase().split(' ').join('');
-                    let concatB = b.title.toLowerCase().split(' ').join('');
-                    console.log(concatA, concatB)
-                    if( concatA > concatB){
-                        return 1;
-                    }else{
-                        return -1;
-                    }
-                });
-                break;
-        }
-    }else{
-        // tri par popularité par défaut
-        videosAndImages.sort(function(a, b) {
-            return b.likes - a.likes;
-        })
-    }
-    console.log(videosAndImages);
+    // Réinitialisation du template (pour la fonction de tri)
+    photographerPage.innerHTML = '';
 
     // Ajout du template - section description du photographe
     photographerPage.insertAdjacentHTML('beforeend',
@@ -272,14 +241,61 @@ async function showData() {
         <div class="photoSection__filter">
             Trier par 
             <select id="sortMedia">
-                <option value="Popularity">Popularité <i class="las la-angle-down"></i></option>
-                <option value"Date">Date</option>
-                <option value="Title">Titre</option>
             </select>
         </div>
         <div class="photoSection__list">
         </div>
     </section>`)
+
+    let sortMedia = document.querySelector("#sortMedia");
+    sortMedia.addEventListener('change', function(){
+        sortValue = sortMedia.options[sortMedia.selectedIndex].value;
+        showData();
+    });
+
+    //filtre des media via le select
+    switch(sortValue){
+        case 'Date':
+            videosAndImages.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+            });
+            sortMedia.innerHTML = `<option value="Date">Date</option>
+                                   <option value="Popularity">Popularité <i class="las la-angle-down"></i></option>
+                                   <option value="Title">Titre</option>`
+            break;
+        case 'Title':
+            videosAndImages.sort((a, b) => {
+                let concatA = a.title.toLowerCase().split(' ').join('');
+                let concatB = b.title.toLowerCase().split(' ').join('');
+                // console.log(concatA, concatB)
+                if( concatA > concatB){
+                    return 1;
+                }else{
+                    return -1;
+                }
+            });
+            sortMedia.innerHTML = `<option value="Title">Titre</option>
+                                   <option value="Popularity">Popularité <i class="las la-angle-down"></i></option>
+                                   <option value="Date">Date</option>`
+            break;
+        case 'Popularity':
+            videosAndImages.sort((a, b) => {
+                return b.likes - a.likes;
+            });
+            sortMedia.innerHTML = `<option value="Popularity">Popularité <i class="las la-angle-down"></i></option>
+                                   <option value="Date">Date</option>
+                                   <option value="Title">Titre</option>`
+            break;
+        default:
+            //par défaut tri par popularité
+            videosAndImages.sort((a, b) => {
+                return b.likes - a.likes;
+            });
+            sortMedia.innerHTML = `<option value="Popularity">Popularité <i class="las la-angle-down"></i></option>
+                                   <option value="Date">Date</option>
+                                   <option value="Title">Titre</option>`
+            break;
+    }
 
     // Ajout du template - section media - media
     let photographerPageMediaList = document.querySelector('.photoSection__list');
@@ -332,17 +348,9 @@ async function showData() {
 
 
 if(photographerPage){
-    photographerPage.innerHTML = '';
     showData().then(() => {
         let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
         selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a href="index.html?tag=${tag}"><li class="tag">${tag}</li></a>`))
-    }).then(() => {
-        let sortMedia = document.querySelector("#sortMedia");
-        sortMedia.addEventListener('change', function(){
-            sortValue = sortMedia.options[sortMedia.selectedIndex].value;
-            console.log(sortValue);
-            showData();
-        });
     })
 }
 
