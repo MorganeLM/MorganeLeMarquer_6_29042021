@@ -139,7 +139,9 @@ getData()
 // separate JS file ?
 const photographerPage = document.querySelector('.photographer_page');
 let selectedPhotographer;
+let selectedPhotographerName;
 let sortValue = "";
+let videosAndImages = [];
 // factory for media
 function Image(media){
     this.id = media.id
@@ -176,11 +178,11 @@ function MediaFactory(media, type){
     //}
 }
 
-function addLike(){
-    this.like ++;
+function addLike(media){
+    media.likes ++;
 }
 
-async function showData() {
+async function getMediaData() {
     // read our JSON
     let response = await fetch('/js/data.json');
     let data = await response.json();
@@ -192,7 +194,7 @@ async function showData() {
     const currentPhotographerId = new URL(window.location.href).searchParams.get('id');
     let photographerId = parseInt(currentPhotographerId);
     selectedPhotographer = photographers.find((element) => element.id === photographerId);
-    let selectedPhotographerName = selectedPhotographer.name.split(' ')[0]; // for media path
+    selectedPhotographerName = selectedPhotographer.name.split(' ')[0]; // for media path
 
     // search medias of the selected photographer
     medias.forEach(media => {
@@ -200,7 +202,7 @@ async function showData() {
             photographerMedias.push(media);
         }
     })
-    let videosAndImages = [];
+
     photographerMedias.forEach(media => {
         if(media.image){
             videosAndImages.push(MediaFactory(media, 'image'));
@@ -209,10 +211,11 @@ async function showData() {
             videosAndImages.push(MediaFactory(media, 'video'));
         }
     })
+}
 
+function showData(){
     // Réinitialisation du template (pour la fonction de tri)
     photographerPage.innerHTML = '';
-
     // Ajout du template - section description du photographe
     photographerPage.insertAdjacentHTML('beforeend',
         `<section class="photographer_info">
@@ -234,7 +237,6 @@ async function showData() {
         </div>
     </section>`
     );
-
     // Ajout du template - section media - filtre
     photographerPage.insertAdjacentHTML('beforeend',
     `<section class="photoSection">
@@ -252,7 +254,6 @@ async function showData() {
         sortValue = sortMedia.options[sortMedia.selectedIndex].value;
         showData();
     });
-
     //filtre des media via le select
     switch(sortValue){
         case 'Date':
@@ -296,10 +297,9 @@ async function showData() {
                                    <option value="Title">Titre</option>`
             break;
     }
-
     // Ajout du template - section media - media
     let photographerPageMediaList = document.querySelector('.photoSection__list');
-    videosAndImages.forEach(media => {
+    videosAndImages.forEach((media, index) => {
         if(media.image){
             photographerPageMediaList.insertAdjacentHTML('beforeend',
             `<article class="photoSection__list__photoBloc">
@@ -313,7 +313,7 @@ async function showData() {
                         <h3>${media.title}</h3>
                         <div>
                             <span>${media.likes}</span>
-                            <i class="las la-heart"></i>
+                            <i class="las la-heart" aria-label="likes" id="likes_${index}"></i>
                         </div>
                     </figcaption>
                 </figure>
@@ -336,21 +336,32 @@ async function showData() {
                         <h3>${media.title}</h3>
                         <div>
                             <span>${media.likes}</span>
-                            <i class="las la-heart"></i>
+                            <i class="las la-heart" aria-label="likes" id="likes_${index}"></i>
                         </div>
                     </figcaption>
                 </figure>
             </article>`)
         }
+        let likeIcon = document.querySelector(`#likes_${index}`);
+        likeIcon.addEventListener('click', function(){
+            addLike(media);
+            showData();
+        });
     })
 }
 
+function addTagInPhotoPage(){
+    let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
+    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a href="index.html?tag=${tag}"><li class="tag">${tag}</li></a>`))
+}
 
+async function main(){
+    await getMediaData();
+    showData();
+    addTagInPhotoPage();
+}
 
 if(photographerPage){
-    showData().then(() => {
-        let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
-        selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a href="index.html?tag=${tag}"><li class="tag">${tag}</li></a>`))
-    })
+    main();
 }
 
