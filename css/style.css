@@ -157,6 +157,7 @@ main .photographer__tags {
 }
 
 main.photographer_page {
+  position: relative;
   display: block;
   margin: 10px 100px;
 }
@@ -276,5 +277,63 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
      object-fit: cover;
   -o-object-position: top;
      object-position: top;
+}
+
+#contact_modal {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  padding: 20px 30px;
+  background-color: #D3573C;
+  -webkit-box-shadow: 0 0 10px lightgrey;
+          box-shadow: 0 0 10px lightgrey;
+}
+
+#contact_modal h1 {
+  font-weight: 400;
+  position: relative;
+}
+
+#contact_modal h1 .la-times {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+#contact_modal label, #contact_modal input,
+#contact_modal textarea {
+  display: block;
+  width: 100%;
+}
+
+#contact_modal label {
+  margin-top: 15px;
+  font-size: 1.2em;
+}
+
+#contact_modal button {
+  color: #fff;
+  background-color: #901C1C;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 25px;
+  margin-top: 15px;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+#contact_modal input {
+  height: 2.2em;
+}
+
+#contact_modal textarea {
+  resize: none;
 }
 /*# sourceMappingURL=style.css.map */

@@ -138,6 +138,7 @@ main{
 }
 
 main.photographer_page{
+    position: relative;
     display: block;
     margin: 10px 100px;
     .photographer_info{
@@ -229,3 +230,51 @@ main.photographer_page{
     }
 }
 
+#contact_modal{
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    padding: 20px 30px;
+    background-color: $secondary;
+    box-shadow: 0 0 10px lightgrey;
+    h1{
+        font-weight: 400;
+        position: relative;
+        .la-times{
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+    }
+    label, input,
+    textarea{
+        display: block;
+        width: 100%;
+    }
+    label{
+        margin-top: 15px;
+        font-size: 1.2em;
+    }
+    button{
+        color: #fff;
+        background-color: $primary;
+        border: none;
+        border-radius: 5px;
+        padding: 15px 25px;
+        margin-top: 15px;
+        font-size: 0.8em;
+        cursor: pointer;
+    }
+    input{
+        height: 2.2em;
+    }
+    textarea {
+        resize: none;
+    }
+}
