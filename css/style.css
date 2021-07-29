@@ -204,6 +204,10 @@ main.photographer_page .photographer_info button {
   cursor: pointer;
 }
 
+main.photographer_page .photoSection .la-heart {
+  cursor: pointer;
+}
+
 main.photographer_page .photoSection__filter {
   margin-top: 20px;
 }

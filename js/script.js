@@ -183,26 +183,24 @@ function addLike(media){
 }
 
 async function getMediaData() {
-    // read our JSON
+    // read JSON file
     let response = await fetch('/js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
     let medias = data.media;
     let photographerMedias = [];
-
     // search photographer
     const currentPhotographerId = new URL(window.location.href).searchParams.get('id');
     let photographerId = parseInt(currentPhotographerId);
     selectedPhotographer = photographers.find((element) => element.id === photographerId);
     selectedPhotographerName = selectedPhotographer.name.split(' ')[0]; // for media path
-
     // search medias of the selected photographer
     medias.forEach(media => {
         if(media.photographerId === photographerId){
             photographerMedias.push(media);
         }
     })
-
+    // use MediaFactory to add properties to media objects (description for alt="")
     photographerMedias.forEach(media => {
         if(media.image){
             videosAndImages.push(MediaFactory(media, 'image'));
@@ -237,6 +235,7 @@ function showData(){
         </div>
     </section>`
     );
+    // ------------------------- SELECT / TRI DES MEDIA -----------------------
     // Ajout du template - section media - filtre
     photographerPage.insertAdjacentHTML('beforeend',
     `<section class="photoSection">
@@ -248,11 +247,12 @@ function showData(){
         <div class="photoSection__list">
         </div>
     </section>`)
-
+    // event pour le tri des media
     let sortMedia = document.querySelector("#sortMedia");
     sortMedia.addEventListener('change', function(){
         sortValue = sortMedia.options[sortMedia.selectedIndex].value;
         showData();
+        addTagInPhotoPage();
     });
     //filtre des media via le select
     switch(sortValue){
@@ -346,6 +346,7 @@ function showData(){
         likeIcon.addEventListener('click', function(){
             addLike(media);
             showData();
+            addTagInPhotoPage();
         });
     })
 }

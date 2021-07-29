@@ -171,6 +171,9 @@ main.photographer_page{
         }
     }
     .photoSection{
+        .la-heart{
+            cursor: pointer;
+        }
         &__filter{
             margin-top: 20px;
             select{
