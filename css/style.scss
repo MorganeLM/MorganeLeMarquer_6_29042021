@@ -230,6 +230,21 @@ main.photographer_page{
     }
 }
 
+#price_and_likes{
+    z-index: 300;
+    position: fixed;
+    bottom: 0;
+    right: 50px;
+    background-color: #db8876;
+    padding: 15px 35px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 1.2em;
+    span:first-of-type{
+        margin-right: 60px;
+    }
+}
+
 #contact_modal{
     z-index: 3000;
     position: fixed;

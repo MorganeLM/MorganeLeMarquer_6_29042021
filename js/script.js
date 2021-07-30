@@ -221,7 +221,6 @@ function showData(){
             <h2 class="photographer__name">${selectedPhotographer.name}</h2>
             <p class="photographer__location">${selectedPhotographer.city}, ${selectedPhotographer.country}</p>
             <p class="photographer__description">${selectedPhotographer.tagline}</p>
-            <p class="photographer__price">${selectedPhotographer.price}€/jour</p>
             <ul class="photographer__tags" id="tagGroup">
             </ul>
         </div>
@@ -235,6 +234,7 @@ function showData(){
         </div>
     </section>`
     );
+    // Ajout de la modal de contact
     photographerPage.insertAdjacentHTML('beforeend',
         `<div id="contact_modal">
             <h1>
@@ -267,6 +267,12 @@ function showData(){
     document.querySelector('#contact').addEventListener('click', () => contactModal.style.display = 'block');
     document.querySelector('#close_contact').addEventListener('click', () => contactModal.style.display = 'none');
     document.querySelector('#contact_modal form').addEventListener('submit', () => showData());
+    // Ajout de l'encart like+prix
+    let likeSum = videosAndImages.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
+    photographerPage.insertAdjacentHTML('beforeend',
+    `<div id="price_and_likes">
+        <span>${likeSum} <i class="las la-heart" aria-label="likes"></i></span> <span>${selectedPhotographer.price}€ / jour</span>
+    </div>`);
 
     // ------------------------- SELECT / TRI DES MEDIA -----------------------
     // Ajout du template - section media - filtre
