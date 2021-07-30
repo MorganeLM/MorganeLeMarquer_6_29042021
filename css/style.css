@@ -280,6 +280,7 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
 }
 
 #contact_modal {
+  z-index: 3000;
   position: fixed;
   top: 50px;
   left: 50%;
@@ -288,9 +289,10 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
   width: 90%;
   max-width: 500px;
   padding: 20px 30px;
-  background-color: #D3573C;
-  -webkit-box-shadow: 0 0 10px lightgrey;
-          box-shadow: 0 0 10px lightgrey;
+  background-color: #db8876;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 10px darkgrey;
+          box-shadow: 0 0 10px darkgrey;
 }
 
 #contact_modal h1 {
@@ -335,5 +337,10 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
 
 #contact_modal textarea {
   resize: none;
+}
+
+#contact_modal input:focus, #contact_modal textarea:focus, #contact_modal button:focus {
+  outline: none;
+  border: 2px solid #901C1C;
 }
 /*# sourceMappingURL=style.css.map */

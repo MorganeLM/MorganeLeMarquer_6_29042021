@@ -235,6 +235,39 @@ function showData(){
         </div>
     </section>`
     );
+    photographerPage.insertAdjacentHTML('beforeend',
+        `<div id="contact_modal">
+            <h1>
+                Contactez-moi <br>
+                ${selectedPhotographer.name}
+                <i class="las la-times" id="close_contact"></i>
+            </h1>
+            <form method="post">
+                <label for="firstname">
+                    Prénom
+                    <input type="firstname" id="firstname" name="Prénom">
+                </label>
+                <label for="lastname">
+                    Nom
+                    <input type="lastname" id="lastname" name="Nom">
+                </label>
+                <label for="email">
+                    Email
+                    <input type="text" id="email" name="Email">
+                </label>
+                <label for="message">
+                    Votre message
+                    <textarea id="message" name="Votre message" rows="6" cols="50"></textarea>
+                </label>
+                <button type="submit" aria-label="Envoyer">Envoyer</button>
+            </form>
+        </div>`);
+    let contactModal = document.querySelector('#contact_modal');
+    contactModal.style.display = 'none';
+    document.querySelector('#contact').addEventListener('click', () => contactModal.style.display = 'block');
+    document.querySelector('#close_contact').addEventListener('click', () => contactModal.style.display = 'none');
+    document.querySelector('#contact_modal form').addEventListener('submit', () => showData());
+
     // ------------------------- SELECT / TRI DES MEDIA -----------------------
     // Ajout du template - section media - filtre
     photographerPage.insertAdjacentHTML('beforeend',

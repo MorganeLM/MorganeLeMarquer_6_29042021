@@ -231,6 +231,7 @@ main.photographer_page{
 }
 
 #contact_modal{
+    z-index: 3000;
     position: fixed;
     top: 50px;
     left: 50%;
@@ -238,8 +239,9 @@ main.photographer_page{
     width: 90%;
     max-width: 500px;
     padding: 20px 30px;
-    background-color: $secondary;
-    box-shadow: 0 0 10px lightgrey;
+    background-color: #db8876;
+    border-radius: 3px;
+    box-shadow: 0 0 10px darkgrey;
     h1{
         font-weight: 400;
         position: relative;
@@ -276,5 +278,9 @@ main.photographer_page{
     }
     textarea {
         resize: none;
+    }
+    input:focus, textarea:focus, button:focus{
+        outline: none;
+        border: 2px solid $primary
     }
 }
