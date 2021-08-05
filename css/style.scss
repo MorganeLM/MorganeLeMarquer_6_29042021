@@ -146,6 +146,7 @@ main.photographer_page{
         justify-content: space-between;
         display: flex;
         padding: 40px 50px;
+        font-size: 1.1em;
         &__bloc{
             width: 33%;
         }
@@ -169,6 +170,7 @@ main.photographer_page{
             border-radius: 5px;
             margin-top: 30px;
             cursor: pointer;
+            font-size: 0.85em;
         }
     }
     .photoSection{
@@ -297,5 +299,62 @@ main.photographer_page{
     input:focus, textarea:focus, button:focus{
         outline: none;
         border: 2px solid $primary
+    }
+}
+
+#media{
+    background-color: red;
+    height: 100vh;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+}
+
+main#media_modal{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: rgba(255, 255, 255, 0.9);    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i.las{
+        position: absolute;
+        color: $primary;
+        font-size: 4em;
+    }
+    i.la-times{
+        top: 30px;
+        right: 10px;
+    }
+    i.la-angle-left{
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+    }
+    i.la-angle-right{
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+    }
+    section{
+        position: relative;
+        padding: 50px; 
+        max-height: 100vh;
+        img{
+            max-width: 80vw;
+            height: 80vh;
+            object-fit: cover;
+        }
+        figcaption{
+            color: $primary;
+            font-size: 1.3em;
+            padding: 10px 0;
+        }
     }
 }
