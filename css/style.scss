@@ -302,6 +302,7 @@ main.photographer_page{
     }
 }
 
+//to suppr
 #media{
     background-color: red;
     height: 100vh;
@@ -311,8 +312,9 @@ main.photographer_page{
 body{
     margin: 0;
 }
+//fin
 
-main#media_modal{
+#media_modal{
     position: fixed;
     top: 0;
     right: 0;
@@ -320,9 +322,12 @@ main#media_modal{
     left: 0;
     z-index: 5000;
     background-color: rgba(255, 255, 255, 0.9);    
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
+    i{
+        cursor: pointer;
+    }
     i.las{
         position: absolute;
         color: $primary;

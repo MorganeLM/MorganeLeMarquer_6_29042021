@@ -153,6 +153,8 @@ function Image(media){
     this.date = media.date
     this.price = media.price
     this.description = `Photo nommée ${media.title} prise le ${media.date}`
+    this.path = `images/photos/${selectedPhotographerName}/${media.image}`
+    this.element = `<img src="${this.path}" alt="${this.description}">`
 }
 
 function Video(media){
@@ -164,7 +166,12 @@ function Video(media){
     this.likes = media.likes
     this.date = media.date
     this.price = media.price
-    this.description = `Vidéo nommée ${media.title} tournée le ${media.date}`
+    this.description = `Vidéo nommée ${this.title} tournée le ${this.date}`
+    this.path = `images/photos/${selectedPhotographerName}/${this.video}`
+    this.element = `<video height="100%"  width="100%">
+                        <source src="${this.path}" type="video/mp4" alt="${this.description}">
+                        Erreur de chargement de la video.
+                    </video>`
 }
 
 function MediaFactory(media, type){
@@ -326,8 +333,7 @@ function showData(){
                                    <option value="Date">Date</option>
                                    <option value="Title">Titre</option>`
             break;
-        default:
-            //par défaut tri par popularité
+        default: //par défaut tri par popularité
             videosAndImages.sort((a, b) => {
                 return b.likes - a.likes;
             });
@@ -339,48 +345,51 @@ function showData(){
     // Ajout du template - section media - media
     let photographerPageMediaList = document.querySelector('.photoSection__list');
     videosAndImages.forEach((media, index) => {
-        if(media.image){
-            photographerPageMediaList.insertAdjacentHTML('beforeend',
-            `<article class="photoSection__list__photoBloc">
-                <figure>
-                    <a href="#" aria-label="${media.image}, aperçu en gros plan">
-                        <div class="photoSection__list__photoBloc__photo">
-                        <img src="images/photos/${selectedPhotographerName}/${media.image}" alt="${media.description}">
-                        </div>
-                    </a>
-                    <figcaption>
-                        <h3>${media.title}</h3>
-                        <div>
-                            <span>${media.likes}</span>
-                            <i class="las la-heart" aria-label="likes" id="likes_${index}"></i>
-                        </div>
-                    </figcaption>
-                </figure>
-            </article>`);
-        }
-        if(media.video){
-            photographerPageMediaList.insertAdjacentHTML('beforeend',
-            `<article class="photoSection__list__photoBloc">
-                <a href="#"></a>
-                <figure>
-                    <a href="#" aria-label="${media.video}, lire la vidéo en gros plan">
-                        <div class="photoSection__list__photoBloc__photo">
-                            <video height="100%"  width="100%">
-                                <source src="images/photos/${selectedPhotographerName}/${media.video}" type="video/mp4" alt="${media.description}">
-                                Erreur de chargement de la video.
-                            </video>
-                        </div>
-                    </a>
-                    <figcaption>
-                        <h3>${media.title}</h3>
-                        <div>
-                            <span>${media.likes}</span>
-                            <i class="las la-heart" aria-label="likes" id="likes_${index}"></i>
-                        </div>
-                    </figcaption>
-                </figure>
-            </article>`)
-        }
+        photographerPageMediaList.insertAdjacentHTML('beforeend',
+        `<article class="photoSection__list__photoBloc">
+            <a href="#"></a>
+            <figure>
+                <a href="#" aria-label="${media.video}, lire la vidéo en gros plan" class="media_${index}" id="${index}">
+                    <div class="photoSection__list__photoBloc__photo">
+                        ${media.element}
+                    </div>
+                </a>
+                <figcaption>
+                    <h3>${media.title}</h3>
+                    <div>
+                        <span>${media.likes}</span>
+                        <i class="las la-heart" aria-label="likes" id="likes_${index}"></i>
+                    </div>
+                </figcaption>
+            </figure>
+        </article>`)
+        photographerPageMediaList.insertAdjacentHTML('beforeend',
+            `<div id="media_modal">
+                <section aria-label="Vue de l'image en grand">
+                    <span id="closeMediaModal"><i class="las la-times"></i></span>
+                    <i class="las la-angle-left"></i>
+                    <i class="las la-angle-right"></i>
+                    <figure>
+                    </figure>
+                </section>
+            </div>`);
+        let mediaElt = document.querySelector(`.media_${index}`);
+        let mediaModal = document.querySelector('#media_modal');
+        mediaElt.addEventListener('click', function(e){
+            e.preventDefault();
+            mediaModal.style.display = 'flex'
+            document.querySelector('#media_modal figure').innerHTML = `
+                <div class="media__modal__photo">
+                    ${videosAndImages[index].element}
+                </div>
+                <figcaption>
+                    ${videosAndImages[index].title}
+                </figcaption>`;
+            document.querySelector('#closeMediaModal').addEventListener('click', () => {
+                document.querySelector('#media_modal figure').innerHTML = '';
+                mediaModal.style.display = 'none';
+            })
+        })
         let likeIcon = document.querySelector(`#likes_${index}`);
         likeIcon.addEventListener('click', function(){
             addLike(media);

@@ -372,7 +372,7 @@ body {
   margin: 0;
 }
 
-main#media_modal {
+#media_modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -380,9 +380,7 @@ main#media_modal {
   left: 0;
   z-index: 5000;
   background-color: rgba(255, 255, 255, 0.9);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -391,45 +389,49 @@ main#media_modal {
           align-items: center;
 }
 
-main#media_modal i.las {
+#media_modal i {
+  cursor: pointer;
+}
+
+#media_modal i.las {
   position: absolute;
   color: #901C1C;
   font-size: 4em;
 }
 
-main#media_modal i.la-times {
+#media_modal i.la-times {
   top: 30px;
   right: 10px;
 }
 
-main#media_modal i.la-angle-left {
+#media_modal i.la-angle-left {
   top: 50%;
   left: 10px;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 
-main#media_modal i.la-angle-right {
+#media_modal i.la-angle-right {
   top: 50%;
   right: 10px;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 
-main#media_modal section {
+#media_modal section {
   position: relative;
   padding: 50px;
   max-height: 100vh;
 }
 
-main#media_modal section img {
+#media_modal section img {
   max-width: 80vw;
   height: 80vh;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
-main#media_modal section figcaption {
+#media_modal section figcaption {
   color: #901C1C;
   font-size: 1.3em;
   padding: 10px 0;
