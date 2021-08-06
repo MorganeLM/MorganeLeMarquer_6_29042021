@@ -168,7 +168,7 @@ function Video(media){
     this.price = media.price
     this.description = `Vidéo nommée ${this.title} tournée le ${this.date}`
     this.path = `images/photos/${selectedPhotographerName}/${this.video}`
-    this.element = `<video height="100%"  width="100%">
+    this.element = `<video height="70%"  width="70%">
                         <source src="${this.path}" type="video/mp4" alt="${this.description}">
                         Erreur de chargement de la video.
                     </video>`
@@ -377,18 +377,47 @@ function showData(){
         let mediaModal = document.querySelector('#media_modal');
         mediaElt.addEventListener('click', function(e){
             e.preventDefault();
+            let indexElt = index;
             mediaModal.style.display = 'flex'
             document.querySelector('#media_modal figure').innerHTML = `
                 <div class="media__modal__photo">
-                    ${videosAndImages[index].element}
+                    ${videosAndImages[indexElt].element}
                 </div>
                 <figcaption>
-                    ${videosAndImages[index].title}
+                    ${videosAndImages[indexElt].title}
                 </figcaption>`;
+            addControls(videosAndImages[indexElt]);
             document.querySelector('#closeMediaModal').addEventListener('click', () => {
                 document.querySelector('#media_modal figure').innerHTML = '';
                 mediaModal.style.display = 'none';
+            });
+            document.querySelector('.la-angle-left').addEventListener('click', () => {
+                document.querySelector('#media_modal figure').innerHTML = `
+                <div class="media__modal__photo">
+                    ${videosAndImages[indexElt-1].element}
+                </div>
+                <figcaption>
+                    ${videosAndImages[indexElt-1].title}
+                </figcaption>`;
+                addControls(videosAndImages[indexElt-1]);
+                indexElt--;
             })
+            document.querySelector('.la-angle-right').addEventListener('click', () => {
+                document.querySelector('#media_modal figure').innerHTML = `
+                <div class="media__modal__photo">
+                    ${videosAndImages[indexElt+1].element}
+                </div>
+                <figcaption>
+                    ${videosAndImages[indexElt+1].title}
+                </figcaption>`;
+                addControls(videosAndImages[indexElt+1]);
+                indexElt++;
+            })
+            function addControls(media){
+                if(media.video){
+                    document.querySelector('.media__modal__photo video').setAttribute("controls", "")
+                }
+            }
         })
         let likeIcon = document.querySelector(`#likes_${index}`);
         likeIcon.addEventListener('click', function(){

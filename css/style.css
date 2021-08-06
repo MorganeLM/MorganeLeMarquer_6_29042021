@@ -389,6 +389,12 @@ body {
           align-items: center;
 }
 
+#media_modal video, #media_modal figcaption {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
 #media_modal i {
   cursor: pointer;
 }

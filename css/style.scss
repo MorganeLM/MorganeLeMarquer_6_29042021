@@ -325,6 +325,11 @@ body{
     display: none;
     justify-content: center;
     align-items: center;
+    video, figcaption{
+        display: block;
+        margin: auto;
+        text-align: center;
+    }
     i{
         cursor: pointer;
     }
