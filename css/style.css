@@ -187,6 +187,9 @@ main.photographer_page .photographer_info .photographer__image {
 }
 
 main.photographer_page .photographer_info .photographer__tags {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;

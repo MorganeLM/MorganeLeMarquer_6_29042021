@@ -48,7 +48,7 @@ const getData = async () => {
 function addTags(){
     if(tagNav){
         tagList.forEach((tag) => {
-            tagNav.insertAdjacentHTML('beforeend', `<li class="tag navTag">${tag}</li>`);
+            tagNav.insertAdjacentHTML('beforeend', `<a class="tag navTag" role="button" href="">${tag}</a>`);
         });
     }
 }
@@ -69,20 +69,21 @@ function createTemplate(photographers){
                     <p class="photographer__location">${photographer.city}, ${photographer.country}</p>
                     <p class="photographer__description">${photographer.tagline}</p>
                     <p class="photographer__price">${photographer.price}€/jour</p>
-                    <ul class="photographer__tags" id="tagGroup_${index}">
-                    </ul>
+                    <div class="photographer__tags" id="tagGroup_${index}">
+                    </div>
                 </article>
             `);
             // Je cherche l'élement groupe de tag et le rempli des tags
             let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
-            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<li class="tag articleTag">${tag}</li>`));
+            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<a class="tag articleTag" role="button" href="">${tag}</a>`));
         });
     }
 }
 
 function addTagEvents(tagElt){
     let tags = document.querySelectorAll(tagElt);
-    tags.forEach((tag) => tag.addEventListener('click', function(){
+    tags.forEach((tag) => tag.addEventListener('click', function(e){
+        e.preventDefault();
         // gestion du tag cliqué
         if(tagFilter === this.innerHTML){
             this.classList.remove('activeTag');
@@ -92,8 +93,8 @@ function addTagEvents(tagElt){
             tagFilter = this.innerHTML;
         }
         // gestion des autres tags
-        if(tagElt !== 'li.tag'){
-            let allTags = document.querySelectorAll('li.tag');
+        if(tagElt !== 'a.tag'){
+            let allTags = document.querySelectorAll('a.tag');
             allTags.forEach((tag) => {
                 if(tagFilter === tag.innerHTML){
                     tag.classList.add('activeTag');
@@ -110,10 +111,18 @@ function addTagEvents(tagElt){
                 }
             });
         }
+        // Touches entrée ou espace = clic sur tag 
+        document.querySelectorAll('[role="button"]').forEach(function(button) {
+            button.addEventListener('keydown', function(evt) { 
+               if(evt.keyCode == 13 || evt.keyCode == 32) {
+                   button.click();
+               }
+            });  
+        });
         // génération du template avec filtre actualisé
         getData()
             .then((photographers) => createTemplate(photographers))
-            .then(() => addTagEvents('li.articleTag'))
+            .then(() => addTagEvents('a.articleTag'))
     }));
 }
 
@@ -121,7 +130,7 @@ function addTagEvents(tagElt){
 getData()
     .then((photographers) => createTemplate(photographers))
     .then(() => addTags())
-    .then(() => addTagEvents('li.tag'))
+    .then(() => addTagEvents('a.tag'))
     .then(() => {
         let tags = document.querySelectorAll('.navTag');
             tags.forEach((tag) => {
@@ -229,8 +238,8 @@ function showData(){
             <h2 class="photographer__name">${selectedPhotographer.name}</h2>
             <p class="photographer__location">${selectedPhotographer.city}, ${selectedPhotographer.country}</p>
             <p class="photographer__description">${selectedPhotographer.tagline}</p>
-            <ul class="photographer__tags" id="tagGroup">
-            </ul>
+            <div class="photographer__tags" id="tagGroup">
+            </div>
         </div>
         <div class="photographer_info__bloc">
             <button id="contact">
@@ -455,7 +464,7 @@ function showData(){
 
 function addTagInPhotoPage(){
     let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
-    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a href="index.html?tag=${tag}"><li class="tag">${tag}</li></a>`))
+    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a class="tag" href="index.html?tag=${tag}">${tag}</a>`))
 }
 
 async function main(){

@@ -19,15 +19,6 @@ p, h1, h2, h3{
     margin: 0;
 }
 
-ul{
-    list-style-type: none;
-    display: flex;
-    padding-left: 0;
-    margin: 0;
-    li{
-        margin-right: 7px;
-    }
-}
 
 // TODO : A afficher si navigation clavier (tab), voir https://webaim.org/techniques/skipnav/#maincontent 
 .skipContent{
@@ -53,6 +44,7 @@ ul{
     font-weight: 500;
     text-transform: capitalize;
     cursor: pointer;
+    margin-right: 7px;
 }
 
 .tag:hover{
@@ -66,7 +58,7 @@ ul{
 }
 
 .tag::before{
-    content: '#'
+    content: '#';
 }
 
 header{
@@ -76,11 +68,6 @@ header{
     padding: 35px 100px;
     img{
         width: 180px;
-    }
-    nav{
-        li{
-            margin: 0 5px;
-        }
     }
     h1{
         color: $primary;
@@ -157,6 +144,7 @@ main.photographer_page{
            margin: 0;
         }
         .photographer__tags{
+            display: flex;
             justify-content: flex-start;
         }
         p{
