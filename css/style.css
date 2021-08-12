@@ -12,32 +12,23 @@ p, h1, h2, h3 {
   margin: 0;
 }
 
-ul {
-  list-style-type: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0;
-  margin: 0;
-}
-
-ul li {
-  margin-right: 7px;
-}
-
 .skipContent {
-  display: none;
   position: fixed;
   top: 10px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  color: black;
-  background-color: #D3573C;
+  color: transparent;
+  background-color: transparent;
   border-radius: 5px;
   font-size: 1.1em;
   font-weight: 500;
   padding: 5px 10px;
+}
+
+.skipContent:focus {
+  color: white;
+  background-color: #D3573C;
 }
 
 .tag {
@@ -49,6 +40,7 @@ ul li {
   font-weight: 500;
   text-transform: capitalize;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .tag:hover {
@@ -80,10 +72,6 @@ header {
 
 header img {
   width: 180px;
-}
-
-header nav li {
-  margin: 0 5px;
 }
 
 header h1 {

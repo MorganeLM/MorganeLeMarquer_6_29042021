@@ -22,17 +22,21 @@ p, h1, h2, h3{
 
 // TODO : A afficher si navigation clavier (tab), voir https://webaim.org/techniques/skipnav/#maincontent 
 .skipContent{
-    display: none;
     position: fixed;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    color: black;
-    background-color: $secondary;
+    color: transparent;
+    background-color: transparent;
     border-radius: 5px;
     font-size: 1.1em;
     font-weight: 500;
     padding: 5px 10px;
+}
+
+.skipContent:focus{
+    color: white;
+    background-color: $secondary;
 }
 
 .tag{
@@ -44,7 +48,7 @@ p, h1, h2, h3{
     font-weight: 500;
     text-transform: capitalize;
     cursor: pointer;
-    margin-right: 7px;
+    margin-right: 5px;
 }
 
 .tag:hover{
