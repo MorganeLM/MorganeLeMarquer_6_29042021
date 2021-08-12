@@ -250,7 +250,7 @@ main.photographer_page{
 #contact_modal{
     z-index: 3000;
     position: fixed;
-    top: 50px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -300,6 +300,13 @@ main.photographer_page{
         outline: none;
         border: 2px solid $primary
     }
+}
+
+#form_error{
+    background-color: red;
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
 }
 
 #media_modal{

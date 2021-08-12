@@ -300,7 +300,7 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
 #contact_modal {
   z-index: 3000;
   position: fixed;
-  top: 50px;
+  top: 20px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -360,6 +360,13 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
 #contact_modal input:focus, #contact_modal textarea:focus, #contact_modal button:focus {
   outline: none;
   border: 2px solid #901C1C;
+}
+
+#form_error {
+  background-color: red;
+  margin-top: 10px;
+  color: white;
+  font-weight: bold;
 }
 
 #media_modal {

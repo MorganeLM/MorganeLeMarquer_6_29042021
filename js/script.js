@@ -142,6 +142,7 @@ let selectedPhotographer;
 let selectedPhotographerName;
 let sortValue = "";
 let videosAndImages = [];
+let errorMessages = [];
 // factory for media
 function Image(media){
     this.id = media.id
@@ -267,13 +268,37 @@ function showData(){
                     <textarea id="message" name="Votre message" rows="6" cols="50"></textarea>
                 </label>
                 <button type="submit" aria-label="Envoyer">Envoyer</button>
+                <p id="form_error"></p>
             </form>
         </div>`);
+    // Affiche / Masquage de la modal
     let contactModal = document.querySelector('#contact_modal');
     contactModal.style.display = 'none';
     document.querySelector('#contact').addEventListener('click', () => contactModal.style.display = 'block');
     document.querySelector('#close_contact').addEventListener('click', () => contactModal.style.display = 'none');
-    document.querySelector('#contact_modal form').addEventListener('submit', () => showData());
+
+    // Contrôle des champs du formulaire
+    let form = document.querySelector('#contact_modal form')
+    let firstName = document.querySelector('#firstname');
+    let lastName = document.querySelector('#lastname');
+    let email = document.querySelector('#email');
+    let message = document.querySelector('#message');
+    let errors = document.querySelector('#form_error');
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+        errorMessages = [];
+        textLenght(firstName);
+        textLenght(lastName);
+        emailValidFormat();
+        textLenght(message);
+        if(errorMessages.length === 0){
+            showData();
+        }else{
+            // Formulaire invalide -> messages affichés par fonctions précédantes, réinitialisation du tableau d'erreur(s) pour nouvelle soumission
+            errors.innerHTML = 'Tous les champs doivent être complétés (> 2 caractères) et valides.';
+            errorMessages = [];
+        }
+    });
     // Ajout de l'encart like+prix
     let likeSum = videosAndImages.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
     photographerPage.insertAdjacentHTML('beforeend',
@@ -443,3 +468,29 @@ if(photographerPage){
     main();
 }
 
+
+
+// Fonctions de contrôle du formulaire
+let textFormat = /^[A-zÀ-ú][A-zÀ-ú\'\-]{1,100}/;
+
+function textLenght(text){
+    if (text.value.trim() === "" || !text.value.match(textFormat)){
+        text.style.border = "2px solid red";
+        errorMessages.push('erreur text');
+    } else {
+        text.style.border = "2px solid green";
+    }
+}
+// L'adresse électronique est valide.
+function emailValidFormat(){
+    // REGEX "\S" = any Non-whitespace character
+    let mailFormat = /\S+@\S+\.\S+/;
+    // Pour respecter la spécification HTML5 (MDN : https://developer.mozilla.org/fr/docs/Learn/Forms/Form_validation)
+    let mailFormat2 = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if(email.value.match(mailFormat) && email.value.match(mailFormat2)){
+        email.style.border = "2px solid green";
+    }else{
+        email.style.border = "2px solid red";
+        errorMessages.push('erreur email');
+    }
+}
