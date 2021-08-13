@@ -8,6 +8,17 @@ let homeMain = document.querySelector('#homepageMain');
 let tagFilter = null;
 let tagList = [];
 
+// Touches entrée ou espace = clic sur liens au rôle bouton  
+const enterEqualCLick = () => {
+    document.querySelectorAll('[role="button"]').forEach(function(button) {
+        button.addEventListener('keydown', function(evt) { 
+           if(evt.keyCode == 13 || evt.keyCode == 32) {
+               button.click();
+           }
+        });  
+    });
+} 
+
 const getData = async () => {
     let response = await fetch('/js/data.json');
     let data = await response.json();
@@ -111,14 +122,7 @@ function addTagEvents(tagElt){
                 }
             });
         }
-        // Touches entrée ou espace = clic sur tag 
-        document.querySelectorAll('[role="button"]').forEach(function(button) {
-            button.addEventListener('keydown', function(evt) { 
-               if(evt.keyCode == 13 || evt.keyCode == 32) {
-                   button.click();
-               }
-            });  
-        });
+        enterEqualCLick();
         // génération du template avec filtre actualisé
         getData()
             .then((photographers) => createTemplate(photographers))
@@ -231,6 +235,9 @@ async function getMediaData() {
 function showData(){
     // Réinitialisation du template (pour la fonction de tri)
     photographerPage.innerHTML = '';
+    //Ajout du skipcontent
+    photographerPage.insertAdjacentHTML('beforeend',`<a href="#photoContent" class="skipContent" role="button">
+    Passer au contenu</a>`);
     // Ajout du template - section description du photographe
     photographerPage.insertAdjacentHTML('beforeend',
         `<section class="photographer_info">
@@ -257,7 +264,9 @@ function showData(){
             <h1>
                 Contactez-moi <br>
                 ${selectedPhotographer.name}
-                <i class="las la-times" id="close_contact"></i>
+                <a href="" role="button" id="close_contact" aria-label="fermer la modal">
+                    <i class="las la-times"></i>
+                </a>
             </h1>
             <form method="post">
                 <label for="firstname">
@@ -312,7 +321,7 @@ function showData(){
     let likeSum = videosAndImages.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
     photographerPage.insertAdjacentHTML('beforeend',
     `<div id="price_and_likes">
-        <span>${likeSum} <i class="las la-heart" aria-label="likes"></i></span> <span>${selectedPhotographer.price}€ / jour</span>
+        <span>${likeSum} <i class="las la-heart" aria-label="somme des likes"></i></span> <span>${selectedPhotographer.price}€ / jour</span>
     </div>`);
 
     // ------------------------- SELECT / TRI DES MEDIA -----------------------
@@ -324,7 +333,7 @@ function showData(){
             <select id="sortMedia">
             </select>
         </div>
-        <div class="photoSection__list">
+        <div class="photoSection__list" id="photoContent">
         </div>
     </section>`)
     // event pour le tri des media
@@ -381,7 +390,6 @@ function showData(){
     videosAndImages.forEach((media, index) => {
         photographerPageMediaList.insertAdjacentHTML('beforeend',
         `<article class="photoSection__list__photoBloc">
-            <a href="#"></a>
             <figure>
                 <a href="#" aria-label="${media.video}, lire la vidéo en gros plan" class="media_${index}" id="${index}">
                     <div class="photoSection__list__photoBloc__photo">
@@ -392,7 +400,9 @@ function showData(){
                     <h3>${media.title}</h3>
                     <div>
                         <span>${media.likes}</span>
-                        <i class="las la-heart" aria-label="likes" id="likes_${index}"></i>
+                        <a  id="likes_${index}" role="button" href="" aria-label="ajouter un like">
+                            <i class="las la-heart"></i>
+                        </a>
                     </div>
                 </figcaption>
             </figure>
@@ -400,9 +410,15 @@ function showData(){
         photographerPageMediaList.insertAdjacentHTML('beforeend',
             `<div id="media_modal">
                 <section aria-label="Vue de l'image en grand">
-                    <span id="closeMediaModal"><i class="las la-times"></i></span>
-                    <i class="las la-angle-left"></i>
-                    <i class="las la-angle-right"></i>
+                    <a href="" role="button" id="closeMediaModal" aria-label="fermer la modal">
+                        <i class="las la-times"></i>
+                    </a>
+                    <a href="" role="button" aria-label="media précédent" id="la-angle-left">
+                        <i class="las la-angle-left"></i>
+                    </a>
+                    <a href="" role="button" aria-label="media suivant" id="la-angle-right">
+                        <i class="las la-angle-right"></i>
+                    </a>
                     <figure>
                     </figure>
                 </section>
@@ -421,11 +437,13 @@ function showData(){
                     ${videosAndImages[indexElt].title}
                 </figcaption>`;
             addControls(videosAndImages[indexElt]);
-            document.querySelector('#closeMediaModal').addEventListener('click', () => {
+            document.querySelector('#closeMediaModal').addEventListener('click', (e) => {
+                e.preventDefault();
                 document.querySelector('#media_modal figure').innerHTML = '';
                 mediaModal.style.display = 'none';
             });
-            document.querySelector('.la-angle-left').addEventListener('click', () => {
+            document.querySelector('#la-angle-left').addEventListener('click', (e) => {
+                e.preventDefault();
                 document.querySelector('#media_modal figure').innerHTML = `
                 <div class="media__modal__photo">
                     ${videosAndImages[indexElt-1].element}
@@ -436,7 +454,8 @@ function showData(){
                 addControls(videosAndImages[indexElt-1]);
                 indexElt--;
             })
-            document.querySelector('.la-angle-right').addEventListener('click', () => {
+            document.querySelector('#la-angle-right').addEventListener('click', (e) => {
+                e.preventDefault();
                 document.querySelector('#media_modal figure').innerHTML = `
                 <div class="media__modal__photo">
                     ${videosAndImages[indexElt+1].element}
@@ -447,14 +466,51 @@ function showData(){
                 addControls(videosAndImages[indexElt+1]);
                 indexElt++;
             })
+            // navigation au clavier
+            mediaModal.addEventListener('keydown',(e)=> {
+                e.preventDefault();
+                switch (e.code)
+                {
+                    case 'ArrowLeft':
+                        document.querySelector('#media_modal figure').innerHTML = `
+                        <div class="media__modal__photo">
+                            ${videosAndImages[indexElt-1].element}
+                        </div>
+                        <figcaption>
+                            ${videosAndImages[indexElt-1].title}
+                        </figcaption>`;
+                        addControls(videosAndImages[indexElt-1]);
+                        indexElt--;
+                        break;
+
+                    case 'ArrowRight':
+                        document.querySelector('#media_modal figure').innerHTML = `
+                        <div class="media__modal__photo">
+                            ${videosAndImages[indexElt+1].element}
+                        </div>
+                        <figcaption>
+                            ${videosAndImages[indexElt+1].title}
+                        </figcaption>`;
+                        addControls(videosAndImages[indexElt+1]);
+                        indexElt++;
+                        break;
+
+                    case 'Escape':
+                        document.querySelector('#media_modal figure').innerHTML = '';
+                        mediaModal.style.display = 'none';
+                        break;
+                }
+            });
             function addControls(media){
                 if(media.video){
                     document.querySelector('.media__modal__photo video').setAttribute("controls", "")
                 }
             }
+            document.querySelector('#closeMediaModal').focus();
         })
         let likeIcon = document.querySelector(`#likes_${index}`);
-        likeIcon.addEventListener('click', function(){
+        likeIcon.addEventListener('click', function(e){
+            e.preventDefault();
             addLike(media);
             showData();
             addTagInPhotoPage();
@@ -471,6 +527,7 @@ async function main(){
     await getMediaData();
     showData();
     addTagInPhotoPage();
+    enterEqualCLick();
 }
 
 if(photographerPage){

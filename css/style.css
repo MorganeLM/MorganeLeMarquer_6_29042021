@@ -12,6 +12,10 @@ p, h1, h2, h3 {
   margin: 0;
 }
 
+*:focus {
+  border: 3px solid rgba(47, 0, 255, 0.836);
+}
+
 .skipContent {
   position: fixed;
   top: 10px;
@@ -309,7 +313,7 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
   position: relative;
 }
 
-#contact_modal h1 .la-times {
+#contact_modal h1 #close_contact {
   position: absolute;
   top: 0;
   right: 0;
@@ -387,25 +391,25 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
   cursor: pointer;
 }
 
-#media_modal i.las {
+#media_modal a {
   position: absolute;
   color: #901C1C;
   font-size: 4em;
 }
 
-#media_modal i.la-times {
+#media_modal #closeMediaModal {
   top: 30px;
   right: 10px;
 }
 
-#media_modal i.la-angle-left {
+#media_modal #la-angle-left {
   top: 50%;
   left: 10px;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 
-#media_modal i.la-angle-right {
+#media_modal #la-angle-right {
   top: 50%;
   right: 10px;
   -webkit-transform: translateY(-50%);
