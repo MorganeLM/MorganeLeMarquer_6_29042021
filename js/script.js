@@ -182,7 +182,7 @@ function Video(media){
     this.price = media.price
     this.description = `Vidéo nommée ${this.title} tournée le ${this.date}`
     this.path = `images/photos/${selectedPhotographerName}/${this.video}`
-    this.element = `<video height="70%"  width="70%">
+    this.element = `<video height="100%"  width="100%">
                         <source src="${this.path}" type="video/mp4" alt="${this.description}">
                         Erreur de chargement de la video.
                     </video>`
@@ -241,22 +241,22 @@ function showData(){
     // Ajout du template - section description du photographe
     photographerPage.insertAdjacentHTML('beforeend',
         `<section class="photographer_info">
-        <div class="photographer_info__bloc">
-            <h2 class="photographer__name">${selectedPhotographer.name}</h2>
-            <p class="photographer__location">${selectedPhotographer.city}, ${selectedPhotographer.country}</p>
-            <p class="photographer__description">${selectedPhotographer.tagline}</p>
-            <div class="photographer__tags" id="tagGroup">
+            <div class="photographer_info__bloc">
+                <h2 class="photographer__name">${selectedPhotographer.name}</h2>
+                <p class="photographer__location">${selectedPhotographer.city}, ${selectedPhotographer.country}</p>
+                <p class="photographer__description">${selectedPhotographer.tagline}</p>
+                <div class="photographer__tags" id="tagGroup">
+                </div>
             </div>
-        </div>
-        <div class="photographer_info__bloc">
-            <button id="contact">
-                Contactez-moi
-            </button>
-        </div>
-        <div class="photographer__image">
-            <img src="images/photos/Photographers_ID_Photos/${selectedPhotographer.portrait}" alt="photo de ${selectedPhotographer.name}">
-        </div>
-    </section>`
+            <div class="photographer_info__contactBloc">
+                <button id="contact">
+                    Contactez-moi
+                </button>
+            </div>
+            <div class="photographer__image">
+                <img src="images/photos/Photographers_ID_Photos/${selectedPhotographer.portrait}" alt="photo de ${selectedPhotographer.name}">
+            </div>
+        </section>`
     );
     // Ajout de la modal de contact
     photographerPage.insertAdjacentHTML('beforeend',

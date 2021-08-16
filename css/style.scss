@@ -20,9 +20,13 @@ p, h1, h2, h3{
     margin: 0;
 }
 
-*:focus{
-    border: 3px solid rgba(47, 0, 255, 0.836);
+video{
+    max-height: 80vh;
 }
+
+// *:focus{
+//     border: 3px solid rgba(47, 0, 255, 0.836);
+// }
 
 // A afficher si navigation clavier (tab), voir https://webaim.org/techniques/skipnav/#maincontent 
 .skipContent{
@@ -143,7 +147,7 @@ main.photographer_page{
         display: flex;
         padding: 40px 50px;
         font-size: 1.1em;
-        &__bloc{
+        &__bloc, &__contactBloc{
             width: 33%;
         }
         .photographer__name{
@@ -389,6 +393,45 @@ main.photographer_page{
         display: flex;
         flex-direction: column;
     }
+
+    main.photographer_page{
+        margin: 10px 35px;
+    }
+
+    #photoContent, .photographer_info{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #price_and_likes{
+        display: none;
+    }
+
+    #contact{
+        z-index: 100;
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 20px;
+    }
+
+    main.photographer_page{
+        .photographer_info{
+            flex-direction: initial;
+            padding: 0;
+            background-color: transparent;
+            .photographer__name{
+                margin-top: 10px;
+            }
+            p{
+                margin-bottom: 5px;
+            }
+        }
+        .photoSection__list__photoBloc__photo{
+            height: 220px;
+        }
+    }
 }
 
 @media screen and (max-width: 615px) {
@@ -409,7 +452,46 @@ main.photographer_page{
             }
         }
     }
+
     h2.photographer__name{
         font-size: 2em;
+    }
+      
+    main.photographer_page{
+        margin: 10px 20px;
+        .photoSection__filter{
+            display: none;
+        }
+        .photographer_info{
+            .photographer__image{
+                width: 33%;
+                img{
+                    aspect-ratio: 1 / 1;
+                }
+            }
+            &__contactBloc{
+                width: 0%;
+            }
+            &__bloc{
+                width: 70%;
+            }
+            .photographer__image{
+                position: absolute;
+                width: 30%;
+                height: auto;
+                aspect-ratio: 1/1;
+                right: 0;
+            }
+        }
+    }
+    #contact_modal{
+        top: 0;
+        height: 100vh;
+        overflow: scroll;
+    }
+    #media_modal section{
+        width: calc(100% - 100px);
+        display: flex;
+        justify-content: center;
     }
 }

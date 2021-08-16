@@ -13,8 +13,8 @@ p, h1, h2, h3 {
   margin: 0;
 }
 
-*:focus {
-  border: 3px solid rgba(47, 0, 255, 0.836);
+video {
+  max-height: 80vh;
 }
 
 .skipContent {
@@ -168,7 +168,7 @@ main.photographer_page .photographer_info {
   font-size: 1.1em;
 }
 
-main.photographer_page .photographer_info__bloc {
+main.photographer_page .photographer_info__bloc, main.photographer_page .photographer_info__contactBloc {
   width: 33%;
 }
 
@@ -473,6 +473,47 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
         -ms-flex-direction: column;
             flex-direction: column;
   }
+  main.photographer_page {
+    margin: 10px 35px;
+  }
+  #photoContent, .photographer_info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  #price_and_likes {
+    display: none;
+  }
+  #contact {
+    z-index: 100;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    padding: 5px 20px;
+  }
+  main.photographer_page .photographer_info {
+    -webkit-box-orient: initial;
+    -webkit-box-direction: initial;
+        -ms-flex-direction: initial;
+            flex-direction: initial;
+    padding: 0;
+    background-color: transparent;
+  }
+  main.photographer_page .photographer_info .photographer__name {
+    margin-top: 10px;
+  }
+  main.photographer_page .photographer_info p {
+    margin-bottom: 5px;
+  }
+  main.photographer_page .photoSection__list__photoBloc__photo {
+    height: 220px;
+  }
 }
 
 @media screen and (max-width: 615px) {
@@ -495,6 +536,45 @@ main.photographer_page .photoSection__list__photoBloc__photo img, main.photograp
   }
   h2.photographer__name {
     font-size: 2em;
+  }
+  main.photographer_page {
+    margin: 10px 20px;
+  }
+  main.photographer_page .photoSection__filter {
+    display: none;
+  }
+  main.photographer_page .photographer_info .photographer__image {
+    width: 33%;
+  }
+  main.photographer_page .photographer_info .photographer__image img {
+    aspect-ratio: 1 / 1;
+  }
+  main.photographer_page .photographer_info__contactBloc {
+    width: 0%;
+  }
+  main.photographer_page .photographer_info__bloc {
+    width: 70%;
+  }
+  main.photographer_page .photographer_info .photographer__image {
+    position: absolute;
+    width: 30%;
+    height: auto;
+    aspect-ratio: 1/1;
+    right: 0;
+  }
+  #contact_modal {
+    top: 0;
+    height: 100vh;
+    overflow: scroll;
+  }
+  #media_modal section {
+    width: calc(100% - 100px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 /*# sourceMappingURL=style.css.map */
