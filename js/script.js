@@ -149,7 +149,6 @@ getData()
 // ------------------------------------------------------------
 // ----------------------PHOTOGRAPHER PAGE---------------------
 // ------------------------------------------------------------
-// separate JS file ?
 const photographerPage = document.querySelector('.photographer_page');
 let selectedPhotographer;
 let selectedPhotographerName;
@@ -537,6 +536,7 @@ if(photographerPage){
 
 // Fonctions de contrôle du formulaire
 let textFormat = /^[A-zÀ-ú][A-zÀ-ú\'\-]{1,100}/;
+let mailFormat = /\S+@\S+\.\S+/;
 
 const textLenght = (text) => {
     if (text.value.trim() === "" || !text.value.match(textFormat)){
@@ -546,10 +546,8 @@ const textLenght = (text) => {
         text.style.border = "2px solid green";
     }
 }
-// L'adresse électronique est valide.
+
 const emailValidFormat = () => {
-    // REGEX "\S" = any Non-whitespace character
-    let mailFormat = /\S+@\S+\.\S+/;
     if(email.value.match(mailFormat)){
         email.style.border = "2px solid green";
     }else{
