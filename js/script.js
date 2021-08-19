@@ -247,7 +247,7 @@ const showData = () => {
                 </div>
             </div>
             <div class="photographer_info__contactBloc">
-                <button id="contact">
+                <button id="contact" title="Contactez-moi">
                     Contactez-moi
                 </button>
             </div>
@@ -309,6 +309,7 @@ const showData = () => {
         textLenght(message);
         if(errorMessages.length === 0){
             showData();
+            console.log(`Prénom: ${firstName.value}, Nom: ${lastName.value}, Message: ${message.value}`)
         }else{
             // Formulaire invalide -> messages affichés par fonctions précédantes, réinitialisation du tableau d'erreur(s) pour nouvelle soumission
             errors.innerHTML = 'Tous les champs doivent être complétés (> 2 caractères) et valides.';
