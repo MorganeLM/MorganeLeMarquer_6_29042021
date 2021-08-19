@@ -8,23 +8,23 @@ let homeMain = document.querySelector('#homepageMain');
 let tagFilter = null;
 let tagList = [];
 
-// Touches entrée ou espace = clic sur liens au rôle bouton  
-const enterEqualCLick = () => {
-    document.querySelectorAll('[role="button"]').forEach(function(button) {
-        button.addEventListener('keydown', function(evt) { 
+// Touches entrée ou espace = clic sur liens au rôle bouton
+function enterEqualCLick(){
+    document.querySelectorAll('[role="button"]').forEach(function(button){
+        button.addEventListener('keydown', function(evt){
            if(evt.keyCode == 13 || evt.keyCode == 32) {
                button.click();
            }
-        });  
+        });
     });
-} 
+}
 
 const getData = async () => {
     let response = await fetch('/js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
     // liste des tags présents dans les données de photographes
-    photographers.forEach(function(photographer){
+    photographers.forEach((photographer) => {
         photographer.tags.forEach((tag) => {
             if(tagList.indexOf(tag) === -1){
                 tagList.push(tag);
@@ -56,7 +56,7 @@ const getData = async () => {
     return photographers;
 }
 
-function addTags(){
+const addTags = () => {
     if(tagNav){
         tagList.forEach((tag) => {
             tagNav.insertAdjacentHTML('beforeend', `<a class="tag navTag" role="button" href="">${tag}</a>`);
@@ -64,7 +64,7 @@ function addTags(){
     }
 }
 
-function createTemplate(photographers){
+const createTemplate = (photographers) => {
     // génère les cartes des photographes
     if(homeMain){
         homeMain.innerHTML = '';
@@ -199,9 +199,7 @@ function MediaFactory(media, type){
     //}
 }
 
-function addLike(media){
-    media.likes ++;
-}
+const addLike = (media) => media.likes ++;
 
 async function getMediaData() {
     // read JSON file
@@ -232,7 +230,7 @@ async function getMediaData() {
     })
 }
 
-function showData(){
+const showData = () => {
     // Réinitialisation du template (pour la fonction de tri)
     photographerPage.innerHTML = '';
     //Ajout du skipcontent
@@ -302,7 +300,7 @@ function showData(){
     let email = document.querySelector('#email');
     let message = document.querySelector('#message');
     let errors = document.querySelector('#form_error');
-    form.addEventListener("submit", function(e){
+    form.addEventListener("submit", (e) => {
         e.preventDefault();
         errorMessages = [];
         textLenght(firstName);
@@ -329,7 +327,7 @@ function showData(){
     photographerPage.insertAdjacentHTML('beforeend',
     `<section class="photoSection">
         <div class="photoSection__filter">
-            Trier par 
+            Trier par
             <select id="sortMedia">
             </select>
         </div>
@@ -338,7 +336,7 @@ function showData(){
     </section>`)
     // event pour le tri des media
     let sortMedia = document.querySelector("#sortMedia");
-    sortMedia.addEventListener('change', function(){
+    sortMedia.addEventListener('change', () => {
         sortValue = sortMedia.options[sortMedia.selectedIndex].value;
         showData();
         addTagInPhotoPage();
@@ -425,7 +423,7 @@ function showData(){
             </div>`);
         let mediaElt = document.querySelector(`.media_${index}`);
         let mediaModal = document.querySelector('#media_modal');
-        mediaElt.addEventListener('click', function(e){
+        mediaElt.addEventListener('click', (e) => {
             e.preventDefault();
             let indexElt = index;
             mediaModal.style.display = 'flex'
@@ -509,7 +507,7 @@ function showData(){
             document.querySelector('#closeMediaModal').focus();
         })
         let likeIcon = document.querySelector(`#likes_${index}`);
-        likeIcon.addEventListener('click', function(e){
+        likeIcon.addEventListener('click', (e) => {
             e.preventDefault();
             addLike(media);
             showData();
@@ -518,7 +516,7 @@ function showData(){
     })
 }
 
-function addTagInPhotoPage(){
+const addTagInPhotoPage = () => {
     let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
     selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a class="tag" href="index.html?tag=${tag}">${tag}</a>`))
 }
@@ -539,7 +537,7 @@ if(photographerPage){
 // Fonctions de contrôle du formulaire
 let textFormat = /^[A-zÀ-ú][A-zÀ-ú\'\-]{1,100}/;
 
-function textLenght(text){
+const textLenght = (text) => {
     if (text.value.trim() === "" || !text.value.match(textFormat)){
         text.style.border = "2px solid red";
         errorMessages.push('erreur text');
@@ -548,12 +546,10 @@ function textLenght(text){
     }
 }
 // L'adresse électronique est valide.
-function emailValidFormat(){
+const emailValidFormat = () => {
     // REGEX "\S" = any Non-whitespace character
     let mailFormat = /\S+@\S+\.\S+/;
-    // Pour respecter la spécification HTML5 (MDN : https://developer.mozilla.org/fr/docs/Learn/Forms/Form_validation)
-    let mailFormat2 = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if(email.value.match(mailFormat) && email.value.match(mailFormat2)){
+    if(email.value.match(mailFormat)){
         email.style.border = "2px solid green";
     }else{
         email.style.border = "2px solid red";
