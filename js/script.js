@@ -20,7 +20,7 @@ function enterEqualCLick(){
 }
 
 const getData = async () => {
-    let response = await fetch('/js/data.json');
+    let response = await fetch('js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
     // liste des tags présents dans les données de photographes
@@ -202,7 +202,7 @@ const addLike = (media) => media.likes ++;
 
 async function getMediaData() {
     // read JSON file
-    let response = await fetch('/js/data.json');
+    let response = await fetch('js/data.json');
     let data = await response.json();
     let photographers = data.photographers;
     let medias = data.media;
