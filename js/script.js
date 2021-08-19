@@ -59,7 +59,7 @@ const getData = async () => {
 const addTags = () => {
     if(tagNav){
         tagList.forEach((tag) => {
-            tagNav.insertAdjacentHTML('beforeend', `<a class="tag navTag" role="button" href="">${tag}</a>`);
+            tagNav.insertAdjacentHTML('beforeend', `<a class="tag navTag" role="button" href=""><span class="sr-only">tag</span> ${tag}</a>`);
         });
     }
 }
@@ -86,7 +86,7 @@ const createTemplate = (photographers) => {
             `);
             // Je cherche l'élement groupe de tag et le rempli des tags
             let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
-            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<a class="tag articleTag" role="button" href="">${tag}</a>`));
+            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<a class="tag articleTag" role="button" href=""><span class="sr-only">tag #</span> ${tag}</a>`));
         });
     }
 }
@@ -319,7 +319,7 @@ const showData = () => {
     let likeSum = videosAndImages.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
     photographerPage.insertAdjacentHTML('beforeend',
     `<div id="price_and_likes">
-        <span>${likeSum} <i class="las la-heart" aria-label="somme des likes"></i></span> <span>${selectedPhotographer.price}€ / jour</span>
+        <span>${likeSum} <i class="las la-heart" aria-label="somme des likes"></i><span class="sr-only">likes</span></span> <span>${selectedPhotographer.price}€ / jour</span>
     </div>`);
 
     // ------------------------- SELECT / TRI DES MEDIA -----------------------
@@ -397,7 +397,7 @@ const showData = () => {
                 <figcaption>
                     <h3>${media.title}</h3>
                     <div>
-                        <span>${media.likes}</span>
+                        <span>${media.likes} <span class="sr-only">likes</span></span>
                         <a  id="likes_${index}" role="button" href="" aria-label="ajouter un like">
                             <i class="las la-heart"></i>
                         </a>
@@ -518,7 +518,7 @@ const showData = () => {
 
 const addTagInPhotoPage = () => {
     let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
-    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a class="tag" href="index.html?tag=${tag}">${tag}</a>`))
+    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a class="tag" href="index.html?tag=${tag}"><span class="sr-only">tag#</span> ${tag}</a>`))
 }
 
 async function main(){
