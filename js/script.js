@@ -59,7 +59,7 @@ const getData = async () => {
 const addTags = () => {
     if(tagNav){
         tagList.forEach((tag) => {
-            tagNav.insertAdjacentHTML('beforeend', `<a class="tag navTag" role="button" href=""><span class="sr-only">tag</span> ${tag}</a>`);
+            tagNav.insertAdjacentHTML('beforeend', `<span class="sr-only">tag</span> <a class="tag navTag" role="button" href="">${tag}</a>`);
         });
     }
 }
@@ -86,7 +86,7 @@ const createTemplate = (photographers) => {
             `);
             // Je cherche l'élement groupe de tag et le rempli des tags
             let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
-            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<a class="tag articleTag" role="button" href=""><span class="sr-only">tag #</span> ${tag}</a>`));
+            photographer.tags.forEach(tag => tagsInCurrentArticle.insertAdjacentHTML('beforeend', `<span class="sr-only">tag #</span> <a class="tag articleTag" role="button" href="">${tag}</a>`));
         });
     }
 }
@@ -518,7 +518,7 @@ const showData = () => {
 
 const addTagInPhotoPage = () => {
     let tagsInCurrentPhotographer = document.querySelector(`#tagGroup`);
-    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<a class="tag" href="index.html?tag=${tag}"><span class="sr-only">tag#</span> ${tag}</a>`))
+    selectedPhotographer.tags.forEach(tag => tagsInCurrentPhotographer.insertAdjacentHTML('beforeend', `<span class="sr-only">tag#</span> <a class="tag" href="index.html?tag=${tag}">${tag}</a>`))
 }
 
 async function main(){
