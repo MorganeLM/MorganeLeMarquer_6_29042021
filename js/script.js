@@ -71,18 +71,18 @@ const createTemplate = (photographers) => {
         photographers.forEach((photographer, index) => {
             homeMain.insertAdjacentHTML('beforeend', `
             <article class="photographer">
-                    <a href="photographer_page.html?id=${photographer.id}">
-                        <div class="photographer__image">
-                            <img src="images/photos/Photographers_ID_Photos/${photographer.portrait}" alt="photo de ${photographer.name}">
-                        </div>
-                        <h2 class="photographer__name">${photographer.name}</h2>
-                    </a>
-                    <p class="photographer__location">${photographer.city}, ${photographer.country}</p>
-                    <p class="photographer__description">${photographer.tagline}</p>
-                    <p class="photographer__price">${photographer.price}€/jour</p>
-                    <div class="photographer__tags" id="tagGroup_${index}">
+                <a href="photographer_page.html?id=${photographer.id}">
+                    <div class="photographer__image">
+                        <img src="images/photos/Photographers_ID_Photos/${photographer.portrait}" alt="photo de ${photographer.name}">
                     </div>
-                </article>
+                    <h2 class="photographer__name">${photographer.name}</h2>
+                </a>
+                <p class="photographer__location">${photographer.city}, ${photographer.country}</p>
+                <p class="photographer__description">${photographer.tagline}</p>
+                <p class="photographer__price">${photographer.price}€/jour</p>
+                <div class="photographer__tags" id="tagGroup_${index}">
+                </div>
+            </article>
             `);
             // Je cherche l'élement groupe de tag et le rempli des tags
             let tagsInCurrentArticle = document.querySelector(`#tagGroup_${index}`);
