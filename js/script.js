@@ -389,7 +389,7 @@ const showData = () => {
         photographerPageMediaList.insertAdjacentHTML('beforeend',
         `<article class="photoSection__list__photoBloc">
             <figure>
-                <a href="#" aria-label="${media.video}, lire la vidéo en gros plan" class="media_${index}" id="${index}">
+                <a href="#" aria-label="${media.title}, lire le media en gros plan" class="media_${index}" id="${index}">
                     <div class="photoSection__list__photoBloc__photo">
                         ${media.element}
                     </div>
