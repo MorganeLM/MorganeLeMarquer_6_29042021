@@ -8,11 +8,11 @@ let homeMain = document.querySelector('#homepageMain');
 let tagFilter = null;
 let tagList = [];
 
-// Touches entrée ou espace = clic sur liens au rôle bouton
+// Touche entrée  = clic sur liens au rôle bouton
 function enterEqualCLick(){
     document.querySelectorAll('[role="button"]').forEach(function(button){
         button.addEventListener('keydown', function(evt){
-           if(evt.keyCode == 13 || evt.keyCode == 32) {
+           if(evt.keyCode == 13) {
                button.click();
            }
         });
@@ -504,7 +504,44 @@ const showData = () => {
                     document.querySelector('.media__modal__photo video').setAttribute("controls", "")
                 }
             }
-            document.querySelector('#closeMediaModal').focus();
+            //document.querySelector('#closeMediaModal').focus();
+
+            //focus gestion in modal
+            // add all the elements inside modal which you want to make focusable
+            const  focusableElements = 'a';
+            const modal = document.querySelector('#media_modal'); // select the modal by it's id
+            const firstFocusableElement = modal.querySelectorAll('#media_modal ' + focusableElements)[0]; // get first element to be focused inside modal
+            const focusableContent = modal.querySelectorAll('#media_modal ' + focusableElements);
+            const lastFocusableElement = focusableContent[focusableContent.length - 1]; // get last element to be focused inside modal
+            document.addEventListener('keydown', function(e) {
+                let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+                let index = Array.prototype.indexOf.call(focusableContent, document.activeElement);
+                if (!isTabPressed) {
+                    return;
+                }
+                if (e.shiftKey) { // if shift key pressed for shift + tab combination
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus(); // add focus for the last focusable element
+                        e.preventDefault();
+                    }else{
+                        focusableContent[index - 1].focus();
+                        e.preventDefault();
+                    }
+                }else{ // if tab key is pressed
+                    if (document.activeElement === lastFocusableElement) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+                    firstFocusableElement.focus(); // add focus for the first focusable element
+                    e.preventDefault();
+                    }else{
+                        focusableContent[index + 1].focus();
+                        e.preventDefault();
+                    }
+                }
+                // if(e.key === 'Spacebar'){
+                //     document.querySelector('#media_modal video').paused = false;
+                //     console.log('Space pressed')
+                // }
+            });
+            firstFocusableElement.focus();
         })
         let likeIcon = document.querySelector(`#likes_${index}`);
         likeIcon.addEventListener('click', (e) => {
